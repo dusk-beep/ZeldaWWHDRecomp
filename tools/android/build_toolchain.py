@@ -86,9 +86,9 @@ def main():
         "--target", "llvm-tblgen", "clang-tblgen")
     run("cmake", "-S", source / "llvm", "-B", target, *common,
         "-DCMAKE_TOOLCHAIN_FILE=" + str(ndk / "build/cmake/android.toolchain.cmake"),
-        "-DANDROID_ABI=" + args.abi, "-DANDROID_PLATFORM=android-33",
+        "-DANDROID_ABI=" + args.abi, "-DANDROID_PLATFORM=android-31",
         "-DANDROID_STL=c++_static", "-DLLVM_HOST_TRIPLE=" + triple,
-        "-DLLVM_DEFAULT_TARGET_TRIPLE=" + triple + "33",
+        "-DLLVM_DEFAULT_TARGET_TRIPLE=" + triple + "31",
         "-DLLVM_TABLEGEN=" + str(native / "bin/llvm-tblgen"),
         "-DCLANG_TABLEGEN=" + str(native / "bin/clang-tblgen"),
         "-DLLVM_NATIVE_TOOL_DIR=" + str(native / "bin"),
@@ -118,7 +118,7 @@ def main():
     shutil.copy2(ndk / "NOTICE.toolchain", package / "licenses/NDK-toolchain.txt")
     files = sorted(p for p in package.rglob("*") if p.is_file())
     metadata = {"llvm_revision": revision, "ndk_revision": NDK_REVISION,
-                "abi": args.abi, "api": 33, "build_seconds": time.monotonic() - start,
+                "abi": args.abi, "api": 31, "build_seconds": time.monotonic() - start,
                 "installed_bytes": sum(p.stat().st_size for p in files),
                 "sha256": {str(p.relative_to(package)): digest(p) for p in files}}
     (package / "build.json").write_text(json.dumps(metadata, indent=2) + "\n")
