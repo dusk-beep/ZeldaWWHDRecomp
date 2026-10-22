@@ -60,7 +60,7 @@ def package(source, output):
     if metadata.get("llvm_revision") != LLVM_REVISION or metadata.get("ndk_revision") != NDK_REVISION:
         raise ValueError("compiler package does not match our pinned source/NDK")
     abi = metadata.get("abi")
-    if abi not in MACHINES or metadata.get("api") != 33:
+    if abi not in MACHINES or metadata.get("api") != 31:
         raise ValueError("unsupported compiler ABI/API")
     if any(path.is_symlink() for path in source.rglob("*")):
         raise ValueError("compiler package must not contain symlinks")
@@ -83,7 +83,7 @@ def package(source, output):
         for path in sorted(source.rglob("*")):
             if path.is_file() and path.relative_to(source).parts[0] != "bin":
                 bundle.write(path, path.relative_to(source))
-    result = {"abi": abi, "api": 33, "llvm_revision": LLVM_REVISION,
+    result = {"abi": abi, "api": 31, "llvm_revision": LLVM_REVISION,
               "compiler_identity": digest(source / "build.json"),
               "executables": NAMES,
               "sha256": {name: digest(native / name) for name in NAMES.values()},
