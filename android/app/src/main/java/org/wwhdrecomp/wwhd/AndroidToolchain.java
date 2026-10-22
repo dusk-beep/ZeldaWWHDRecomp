@@ -31,7 +31,7 @@ public final class AndroidToolchain {
         if (abi.equals("arm64-v8a")) triple = "aarch64-linux-android";
         else if (abi.equals("x86_64")) triple = "x86_64-linux-android";
         else throw new IOException("Unsupported compiler architecture");
-        if (metadata.getInt("api") != 33) throw new IOException("Unsupported compiler API");
+        if (metadata.getInt("api") != 31) throw new IOException("Unsupported compiler API");
         String[] tools = {"clang", "ld.lld", "llvm-ar"};
         String[] names = {"libwwhd-clang-driver.so", "libwwhd-ld.lld-driver.so", "libwwhd-ar-driver.so"};
         File[] executables = new File[tools.length];
