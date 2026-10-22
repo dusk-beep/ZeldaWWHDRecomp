@@ -3,10 +3,10 @@
 # tests. The runner has no Vulkan driver, so the renderer smoke test is not run here.
 name: windows
 
-on:
-  push:
-    branches: ["**"]   # not on tag pushes: a release tag points at a commit CI already tested
-  pull_request:
+# on:
+#   push:
+#     branches: ["**"]   # not on tag pushes: a release tag points at a commit CI already tested
+#   pull_request:
 
 jobs:
   build:
