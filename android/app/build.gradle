@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "org.wwhdrecomp.wwhd"
         testInstrumentationRunner "org.wwhdrecomp.wwhd.SetupPolishInstrumentation"
-        minSdk 33
+        minSdk 31
         targetSdk 36
         // release.yml passes the release version and a growing build number; local builds keep these
         versionCode providers.gradleProperty('wwhdVersionCode').map { it as int }.getOrElse(1)
