@@ -22,7 +22,7 @@ public final class AndroidToolchain {
         control.checkpoint();
         JSONObject metadata;
         try (InputStream stream = context.getAssets().open("toolchain-apk.json")) {
-            metadata = new JSONObject(new String(stream.readAllBytes(), StandardCharsets.UTF_8));
+          metadata = new JSONObject(new String(Compat.readAllBytes(stream), StandardCharsets.UTF_8));
         }
         String identity = metadata.getString("compiler_identity");
         if (!identity.matches("[0-9a-f]{64}")) throw new IOException("Invalid compiler identity");

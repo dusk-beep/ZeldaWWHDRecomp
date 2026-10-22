@@ -18,7 +18,7 @@ public final class AndroidExtractor {
     public static JSONObject prepare(Context context) throws Exception {
         JSONObject metadata;
         try (InputStream stream = context.getAssets().open("extractor-apk.json")) {
-            metadata = new JSONObject(new String(stream.readAllBytes(), StandardCharsets.UTF_8));
+            metadata = new JSONObject(new String(Compat.readAllBytes(stream), StandardCharsets.UTF_8));
         }
         String abi = metadata.getString("abi");
         if (metadata.getInt("schema") != 1 || metadata.getInt("api") != 33 ||

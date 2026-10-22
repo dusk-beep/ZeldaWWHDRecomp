@@ -24,8 +24,8 @@ public final class ShaderPrepareActivity extends WwhdActivity {
     private final Runnable showProgress = new Runnable() {
         @Override public void run() {
             try {
-                String[] line = new String(java.nio.file.Files.readAllBytes(progressFile().toPath()),
-                    java.nio.charset.StandardCharsets.UTF_8).trim().split(" ", 3);
+                String[] line = new String(Compat.readAllBytes(progressFile()),
+              java.nio.charset.StandardCharsets.UTF_8).trim().split(" ", 3);
                 long done = Long.parseLong(line[0]), total = Long.parseLong(line[1]);
                 if (total > 0 && note != null)
                     note.setText("Preparing shaders for this Android device: " + (100 * done / total) + "%" +

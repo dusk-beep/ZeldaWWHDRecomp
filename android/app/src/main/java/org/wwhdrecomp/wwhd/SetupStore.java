@@ -34,7 +34,9 @@ public final class SetupStore {
     }
 
     public static JSONObject read(File file) throws Exception {
-        return new JSONObject(new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8));
+        return new JSONObject(
+            new String(Compat.readAllBytes(file), StandardCharsets.UTF_8)
+        );
     }
 
     public static void write(File file, JSONObject value) throws Exception {

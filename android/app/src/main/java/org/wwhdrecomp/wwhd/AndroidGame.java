@@ -53,7 +53,7 @@ public final class AndroidGame {
 
     private static JSONObject asset(Context context, String name) throws Exception {
         try (InputStream input = context.getAssets().open(name)) {
-            return new JSONObject(new String(input.readAllBytes(), StandardCharsets.UTF_8));
+          return new JSONObject(new String(Compat.readAllBytes(input), StandardCharsets.UTF_8));
         }
     }
 
@@ -104,7 +104,7 @@ public final class AndroidGame {
 
     private static JSONObject read(AtomicFile file) throws Exception {
         try (InputStream input = file.openRead()) {
-            return new JSONObject(new String(input.readAllBytes(), StandardCharsets.UTF_8));
+          return new JSONObject(new String(Compat.readAllBytes(input), StandardCharsets.UTF_8));
         }
     }
 

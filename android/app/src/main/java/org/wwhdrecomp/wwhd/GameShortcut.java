@@ -107,7 +107,7 @@ public final class GameShortcut {
     /** The game's 128x128 icon (TgaImage), or null when it can't be read. */
     static Bitmap icon(File tga) {
         try (InputStream input = new FileInputStream(tga)) {
-            TgaImage image = TgaImage.decode(input.readAllBytes());
+            TgaImage image = TgaImage.decode(Compat.readAllBytes(input));
             return Bitmap.createBitmap(image.argb, image.width, image.height, Bitmap.Config.ARGB_8888);
         } catch (IOException | RuntimeException failure) {
             Log.w("wwhd-setup", "Game icon unreadable: " + failure.getMessage());

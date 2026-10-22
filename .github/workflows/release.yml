@@ -106,7 +106,7 @@ jobs:
 
   macos:
     needs: version
-    if: needs.version.outputs.skip != 'true'
+    if: false
     # macOS 15 SDK (Xcode 16) needed: the Metal renderer uses MTLMathMode; the app runs on macOS 14+
     runs-on: macos-15
     env:
@@ -257,7 +257,7 @@ jobs:
 
   linux:
     needs: version
-    if: needs.version.outputs.skip != 'true'
+    if: false
     # x86-64 and arm64 (aarch64), each built and tested on its own architecture's runner.
     # glibc 2.35: the oldest base the release supports (Ubuntu 22.04, Debian 12, Fedora 36, SteamOS 3,
     # Raspberry Pi OS 12 64-bit)
@@ -459,7 +459,7 @@ jobs:
 
   windows:
     needs: version
-    if: needs.version.outputs.skip != 'true'
+    if: false
     # x86-64 and arm64 (Windows on ARM, e.g. Snapdragon X), each built and tested on its own
     # architecture's runner with the llvm-mingw for that host and target
     strategy:

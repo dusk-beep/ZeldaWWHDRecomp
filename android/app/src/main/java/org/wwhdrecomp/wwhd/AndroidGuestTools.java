@@ -86,7 +86,7 @@ final class AndroidGuestTools {
 
     private static JSONObject read(File file) throws Exception {
         try (InputStream input = new AtomicFile(file).openRead()) {
-            return new JSONObject(new String(input.readAllBytes(), StandardCharsets.UTF_8));
+          return new JSONObject(new String(Compat.readAllBytes(input), StandardCharsets.UTF_8));
         }
     }
 
