@@ -7,11 +7,11 @@ import argparse
 import fcntl
 import json
 import os
-from pathlib import Path
 import resource
 import sys
 import threading
 import time
+from pathlib import Path
 from types import SimpleNamespace
 
 from setup_adapter import Adapter, Paused, atomic_json

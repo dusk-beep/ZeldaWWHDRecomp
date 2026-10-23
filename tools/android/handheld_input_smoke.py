@@ -7,14 +7,15 @@ an emulator image whose shell can use uinput and Python Pillow. No game files ar
 """
 import argparse
 import io
-from PIL import Image
 import json
-from pathlib import Path
 import re
 import shlex
 import subprocess
-import adb_util
 import time
+from pathlib import Path
+
+import adb_util
+from PIL import Image
 
 PACKAGE = 'org.wwhdrecomp.wwhd'
 

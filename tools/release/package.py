@@ -174,7 +174,7 @@ def link_command(build):
     cmd = lines[-1].strip()
     # CMake wraps link rules (": && CMD && :" on POSIX hosts, 'cmd.exe /C "cd . && CMD && ..."' on
     # Windows) and may chain post-build steps (copying SDL3.dll): keep the part that writes wwhd
-    m = re.match(r'^(?:\S*[\\/])?cmd(?:\.exe)? /C "(.*)"$', cmd, re.I)
+    m = re.match(r'^(?:\S*[\\/])?cmd(?:\.exe)? /C "(.*)"$', cmd, re.IGNORECASE)
     if m:
         cmd = m.group(1)
     parts = [p.strip() for p in cmd.split(" && ")]
@@ -233,7 +233,7 @@ def decomp_variant(build):
     """"decomp" for a WWHD_DECOMP=ON build directory, else None."""
     try:
         with open(os.path.join(build, "CMakeCache.txt"), encoding="utf-8", errors="replace") as f:
-            on = any(re.match(r"WWHD_DECOMP:BOOL=(ON|1|TRUE|YES)$", l.strip(), re.I) for l in f)
+            on = any(re.match(r"WWHD_DECOMP:BOOL=(ON|1|TRUE|YES)$", l.strip(), re.IGNORECASE) for l in f)
     except OSError:
         return None
     if on and not os.path.isfile(os.path.join(build, "decomp", "decomp_hooks.txt")):

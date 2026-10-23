@@ -1,9 +1,9 @@
 """Reject a mismatched build before producing an installable extractor."""
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 
-from package_extractor import package, NDK_REVISION
+from package_extractor import NDK_REVISION, package
 
 
 class ExtractorPackageTests(unittest.TestCase):

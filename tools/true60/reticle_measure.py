@@ -10,9 +10,9 @@ import argparse
 import hashlib
 import json
 import math
-from pathlib import Path
 import re
 import statistics
+from pathlib import Path
 
 TRACE = re.compile(
     r'\[reticle\] step (\d+) pass (\d+) t (\S+) packet ([0-9A-Fa-f]+) '

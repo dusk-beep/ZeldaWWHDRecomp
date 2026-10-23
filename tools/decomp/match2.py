@@ -12,14 +12,14 @@ Stages (each pair records the stage that found it):
             matched function get the same name (bodies of >= 4 instructions only)
 """
 import bisect
+import math
 import os
 import re
-import math
 from collections import Counter, defaultdict
 
-from features import similarity, wwhd_functions
-from shape import cosine, ldiff, shape, wjaccard
+from features import wwhd_functions
 from layout import accesses, align
+from shape import cosine, ldiff, shape, wjaccard
 
 PURE_VIRTUAL_MIN_USES = 50   # a slot target used by this many vtables is the pure-virtual stub
 

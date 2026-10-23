@@ -7,6 +7,7 @@ import tempfile
 import unittest
 import zlib
 from unittest.mock import patch
+
 import shaderprep as prep
 import shaderprep_format as fmt
 
@@ -312,7 +313,8 @@ class PlayerCaches(unittest.TestCase):
     def test_full_game_sizes_and_consistent_limits(self):
         # a full-game merge (89,242 states, 39,119 pipelines, 300 MB of JSON) passed the old 100,000-entry
         # and 256 MiB limits nowhere consistently; every reader now shares the writers' limits
-        import re, sys
+        import re
+        import sys
         sys.path.insert(0,str(pathlib.Path(prep.HERE)/'release'))
         import guard
         self.assertEqual((guard.TEMPLATE_MAX_BYTES,guard.TEMPLATE_MAX_ENTRIES),(fmt.MAX_BYTES,fmt.MAX_ENTRIES))
@@ -518,12 +520,13 @@ class ParallelBuild(unittest.TestCase):
             for i in range(0,len(code),8):
                 h=((h^int.from_bytes(code[i:i+8].ljust(8,b'\0'),'little'))*0x100000001B3)&0xFFFFFFFFFFFFFFFF
             return h^len(code)
-        for n in range(0,40):
+        for n in range(40):
             code=bytes((i*37+n)&255 for i in range(n))
             self.assertEqual(prep.prog_hash(code),reference(code))
 
     def test_cli_progress_lines(self):
-        import subprocess,sys
+        import subprocess
+        import sys
         with tempfile.TemporaryDirectory() as tmp:
             root=pathlib.Path(tmp);game,programs=self.game(root)
             record=root/'record';template=root/'template'

@@ -4,11 +4,12 @@
 WWHD_KEY_TEST_EXTRACTOR=... WWHD_KEY_TEST_FIXTURES=... python3 test_setup_keys.py
 """
 import os
-from pathlib import Path
-import tempfile
 import subprocess
+import tempfile
 import unittest
+from pathlib import Path
 from unittest import mock
+
 import setup
 
 DISC = bytes(range(16))

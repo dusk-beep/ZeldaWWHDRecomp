@@ -10,7 +10,7 @@ import sys
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import builds  # noqa: E402
+import builds
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -159,6 +159,7 @@ class Hooks(unittest.TestCase):
 class NativeBoundaries(unittest.TestCase):
     def test_hooks_and_sites_use_guarded_calls_in_each_symbol_map(self):
         from types import SimpleNamespace
+
         from recomp import Recompiler
         for address in (0x1000, 0x2000):
             compiler = Recompiler.__new__(Recompiler)

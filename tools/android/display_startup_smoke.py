@@ -3,10 +3,11 @@
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import shlex
-import adb_util
 import time
+from pathlib import Path
+
+import adb_util
 
 PACKAGE = "org.wwhdrecomp.wwhd"
 

@@ -7,13 +7,12 @@ Seeds function entry points from
 and then assigns every instruction in .text to the function whose entry
 precedes it. Branch targets that land in a different function are tail calls.
 """
-import bisect
+import os
 import struct
 import sys
-import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from rpx import Rpx, R_PPC_ADDR32, R_PPC_ADDR16_LO, R_PPC_ADDR16_HA, R_PPC_ADDR16_HI, R_PPC_REL24, SHT_NOBITS
+from rpx import R_PPC_ADDR16_LO, R_PPC_ADDR32, R_PPC_REL24, Rpx
 
 
 def sext(v, bits):

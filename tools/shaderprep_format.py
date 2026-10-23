@@ -6,8 +6,8 @@ then 13 words per attribute (last word signed divisor).
 No executable instructions, shader source or arbitrary byte/string fields exist.
 """
 import array
-import math
 import json
+import math
 import struct
 import zlib
 

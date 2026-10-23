@@ -1,10 +1,10 @@
 """Extraction fault checks through the unchanged installer's pipe protocol."""
-from debug_fixture_build import register as register_fixture_build
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 
-from setup_adapter import Adapter, Paused, digest, inventory
+from debug_fixture_build import register as register_fixture_build
+from setup_adapter import Adapter, Paused, inventory
 
 PACKAGE = Path(__file__).resolve().parents[2]
 

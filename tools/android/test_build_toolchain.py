@@ -1,7 +1,8 @@
 """Catch omission of NDK per-architecture resource libraries."""
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
+
 from build_toolchain import copy_runtime_libraries
 
 

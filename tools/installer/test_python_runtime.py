@@ -5,6 +5,7 @@ Runs only when explicitly invoked by release CI; regular installer unit tests st
 """
 import tempfile
 from unittest import mock
+
 import setup
 
 with tempfile.TemporaryDirectory(prefix="wwhd-python-") as data:

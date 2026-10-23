@@ -13,7 +13,15 @@ import struct
 from collections import Counter, defaultdict
 
 from decomp_index import float_key
-from features import R_PPC_ADDR16_LO, R_PPC_ADDR32, R_PPC_EMB_SDA21, R_PPC_REL24, _elf, calls_and_branches, insn_tokens
+from features import (
+    R_PPC_ADDR16_LO,
+    R_PPC_ADDR32,
+    R_PPC_EMB_SDA21,
+    R_PPC_REL24,
+    _elf,
+    calls_and_branches,
+    insn_tokens,
+)
 from gc_layout import demangle
 
 R_PPC_ADDR16_HA = 6
@@ -59,8 +67,27 @@ def based_tokens(words, lo_at, rsites):
 
 
 class GF:
-    __slots__ = ("id", "name", "dem", "file", "module", "off", "size", "words", "callees", "drefs", "tokens",
-                 "calls", "branches", "glob", "weak", "callers", "frefs", "path", "callsites")
+    __slots__ = (
+        "branches",
+        "callees",
+        "callers",
+        "calls",
+        "callsites",
+        "dem",
+        "drefs",
+        "file",
+        "frefs",
+        "glob",
+        "id",
+        "module",
+        "name",
+        "off",
+        "path",
+        "size",
+        "tokens",
+        "weak",
+        "words",
+    )
 
 
 class GC:

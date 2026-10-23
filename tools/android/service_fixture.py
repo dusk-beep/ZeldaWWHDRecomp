@@ -1,11 +1,11 @@
 """Explicitly packaged debug service fixture; production ondevice_setup stays validating."""
-from debug_fixture_build import register as register_fixture_build
 import argparse
 import ctypes
-from pathlib import Path
 import shutil
+from pathlib import Path
 
 from android_fixture import synthetic_rpx
+from debug_fixture_build import register as register_fixture_build
 from ondevice_setup import run
 from setup_adapter import Adapter
 

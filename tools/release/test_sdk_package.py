@@ -1,5 +1,4 @@
 """Exercise the real SDK payload with the unchanged release guard; no game files."""
-from pathlib import Path
 import ast
 import shutil
 import subprocess
@@ -7,6 +6,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
+from pathlib import Path
 
 import guard
 import package
@@ -32,7 +32,7 @@ class SDKPackage(unittest.TestCase):
                 self.assertEqual(problems, [])
 
     def test_optional_template_packaging_uses_synthetic_payload(self):
-        from test_guard_template import fixture, encode
+        from test_guard_template import encode, fixture
         with tempfile.TemporaryDirectory() as tmp:
             source = Path(tmp) / 'source'
             destination = Path(tmp) / 'package'

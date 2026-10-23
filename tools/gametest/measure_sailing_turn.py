@@ -9,9 +9,9 @@ Output stays in build/sail-169 (<10 MB), with no saves, states, graphics or audi
 """
 import argparse
 import os
-from pathlib import Path
 import re
 import subprocess
+from pathlib import Path
 
 
 def run(args, **kwargs):
@@ -29,7 +29,7 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     function = None
     for path in args.gen.glob('code_*.c'):
-        match = re.search(r'^void f_0247D4B0\(.*?^}', path.read_text(), re.M | re.S)
+        match = re.search(r'^void f_0247D4B0\(.*?^}', path.read_text(), re.MULTILINE | re.DOTALL)
         if match:
             function = match.group()
             break

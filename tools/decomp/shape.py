@@ -40,7 +40,7 @@ def skip(w):
 
 
 class Shape:
-    __slots__ = ("hist", "bigrams", "cbr", "loops", "cmps", "fops", "n", "hnorm", "bsum")
+    __slots__ = ("bigrams", "bsum", "cbr", "cmps", "fops", "hist", "hnorm", "loops", "n")
 
 
 def shape(words, base=0):

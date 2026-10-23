@@ -1,13 +1,18 @@
 """Resource identities must survive repackaging without changing source bytes."""
-import io
 import hashlib
-from pathlib import Path
+import io
 import tempfile
-from unittest.mock import patch
 import unittest
 import zipfile
+from pathlib import Path
+from unittest.mock import patch
 
-from prepare_python import write_entry, verified_download, runtime_fixture_source, source_files
+from prepare_python import (
+    runtime_fixture_source,
+    source_files,
+    verified_download,
+    write_entry,
+)
 
 
 class ResourceIdentityTests(unittest.TestCase):

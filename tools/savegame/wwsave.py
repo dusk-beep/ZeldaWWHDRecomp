@@ -397,15 +397,7 @@ SLOT_NAMES = ["Telescope", "Sail", "Wind Waker", "Grappling Hook", "Spoils Bag",
 SONGS = ["Wind's Requiem", "Ballad of Gales", "Command Melody", "Earth God's Lyric",
          "Wind God's Aria", "Song of Passing"]
 PEARLS = ["Nayru", "Din", "Farore"]
-ISLANDS = ("ForsakenFortress StarIsland NorthernFairyIsland GaleIsle CrescentMoonIsland SevenStarIsles "
-           "OverlookIsland FourEyeReef MotherandChildIsles SpectacleIsland WindfallIsland PawprintIsle "
-           "DragonRoostIsland FlightControlPlatform WesternFairyIsland RockSpireIsle TingleIsland "
-           "NorthernTriangleIsland EasternFairyIsland FireMountain StarBeltArchipelago ThreeEyeReef "
-           "GreatfishIsle CyclopsReef SixEyeReef ToweroftheGods EasternTriangleIsland ThornedFairyIsland "
-           "NeedleRockIsle IsletofSteel StoneWatcherIsland SouthernTriangleIsland PrivateOasis BombIsland "
-           "BirdsPeakRock DiamondSteppeIsland FiveEyeReef SharkIsland SouthernFairyIsland IceRingIsle "
-           "ForestHaven CliffPlateauIsles HorseshoeIsland OutsetIsland HeadstoneIsland TwoEyeReef "
-           "AngularIsles BoatingCourse FiveStarIsles").split()
+ISLANDS = ["ForsakenFortress", "StarIsland", "NorthernFairyIsland", "GaleIsle", "CrescentMoonIsland", "SevenStarIsles", "OverlookIsland", "FourEyeReef", "MotherandChildIsles", "SpectacleIsland", "WindfallIsland", "PawprintIsle", "DragonRoostIsland", "FlightControlPlatform", "WesternFairyIsland", "RockSpireIsle", "TingleIsland", "NorthernTriangleIsland", "EasternFairyIsland", "FireMountain", "StarBeltArchipelago", "ThreeEyeReef", "GreatfishIsle", "CyclopsReef", "SixEyeReef", "ToweroftheGods", "EasternTriangleIsland", "ThornedFairyIsland", "NeedleRockIsle", "IsletofSteel", "StoneWatcherIsland", "SouthernTriangleIsland", "PrivateOasis", "BombIsland", "BirdsPeakRock", "DiamondSteppeIsland", "FiveEyeReef", "SharkIsland", "SouthernFairyIsland", "IceRingIsle", "ForestHaven", "CliffPlateauIsles", "HorseshoeIsland", "OutsetIsland", "HeadstoneIsland", "TwoEyeReef", "AngularIsles", "BoatingCourse", "FiveStarIsles"]
 STAGES = ["Sea", "Sea (alt)", "Forsaken Fortress", "Dragon Roost Cavern", "Forbidden Woods",
           "Tower of the Gods", "Earth Temple", "Wind Temple", "Ganon's Tower", "Hyrule",
           "Ship", "Misc (interiors)", "Sub-dungeons", "Sub-dungeons (new)", "Blue Chu Jelly", "Test"]

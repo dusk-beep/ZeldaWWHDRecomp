@@ -61,7 +61,7 @@ def offered(manifest, is_mac):
     return bool(is_mac and isinstance(manifest.get("decomp"), dict) and is_dev_version(manifest.get("version")))
 
 
-OS_FILES = re.compile(r"^(\.DS_Store|\._.*|Thumbs\.db|desktop\.ini)$", re.I)  # what file browsers add
+OS_FILES = re.compile(r"^(\.DS_Store|\._.*|Thumbs\.db|desktop\.ini)$", re.IGNORECASE)  # what file browsers add
 
 
 def digest_entries(entries):

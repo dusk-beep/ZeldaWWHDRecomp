@@ -8,9 +8,9 @@ Outputs belong in a build directory, not the source tree.
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import struct
 import zipfile
+from pathlib import Path
 
 TOOL = '''from pathlib import Path
 import sys

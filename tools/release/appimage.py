@@ -19,8 +19,8 @@ import hashlib
 import json
 import os
 import platform
-import struct
 import shutil
+import struct
 import subprocess
 import sys
 import tempfile

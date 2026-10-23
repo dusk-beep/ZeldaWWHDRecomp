@@ -1,7 +1,7 @@
 """Check that runtime delivery preserves linking and excludes generated game code."""
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from package_runtime import recipe

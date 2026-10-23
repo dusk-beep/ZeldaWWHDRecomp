@@ -19,7 +19,6 @@ from collections import OrderedDict
 from . import binio
 from .anim import pai1, pat1, tracks
 
-
 _SRGB_TARGETS = {"%s.%s" % (w, ch) for w in ("black", "white") for ch in "rgb"}
 
 

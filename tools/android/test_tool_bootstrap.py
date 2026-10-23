@@ -1,12 +1,12 @@
 """The runtime's bootstraps for a mod package's Python preparation tool (runtime/src/mods/guest_build.h)."""
 import json
 import os
-from pathlib import Path
 import re
 import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
 HEADER = Path(__file__).resolve().parents[2] / "runtime/src/mods/guest_build.h"
 

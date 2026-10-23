@@ -63,21 +63,23 @@ writes a LOCAL code-carrying headstart. Never distribute that generated file.
 """
 import os
 import sys
+
 # Windows' embeddable Python (the release's tools\python) runs isolated: it does not add the script's
 # folder to sys.path, so the sibling module is found explicitly.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import shaderprep_format as template_format  # noqa: E402
-import json
 import collections
 import ctypes
 import glob
 import hashlib
+import json
 import shlex
 import shutil
 import struct
 import subprocess
 import time
 import zlib
+
+import shaderprep_format as template_format
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)

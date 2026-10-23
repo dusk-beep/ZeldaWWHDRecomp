@@ -6,9 +6,9 @@ Keep non-address exceptions narrow and documented; new game literals must use
 GC/GD and have a shipped mapping. Canonical host dispatch identities use the
 explicit CanonicalCodeId marker and still require a shipped code mapping.
 """
-from pathlib import Path
 import re
 import unittest
+from pathlib import Path
 
 import builds
 
@@ -26,9 +26,9 @@ NON_ADDRESS = {
 NON_ADDRESS.update({("espresso_fp.c", value): "frsqrte mantissa lookup table"
                     for value in (0x02FB7000, 0x02D26000, 0x02AC0000, 0x02881000,
                                   0x02665000, 0x02468000, 0x02287000, 0x020C1000)})
-TRIVIA = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', re.S)
+TRIVIA = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', re.DOTALL)
 LITERAL = re.compile(r'\b0[xX]([0-9a-fA-F]{1,8})(?![0-9a-fA-F])[uUlL]*\b')
-WRAPPED = re.compile(r'\b(GC|GD|GC_OPTIONAL|CANONICAL_CODE_ID)\s*\([^;]*?\)', re.S)
+WRAPPED = re.compile(r'\b(GC|GD|GC_OPTIONAL|CANONICAL_CODE_ID)\s*\([^;]*?\)', re.DOTALL)
 FIXED_GAME_ALLOCATIONS = {0x145AC92C, 0x3BB9DE00, 0x44BDF900, 0x44BDFD00}
 
 

@@ -13,8 +13,8 @@ import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import game_piece_model as gp  # noqa: E402
-import collision_mesh  # noqa: E402
+import collision_mesh
+import game_piece_model as gp
 
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 RECIPES = os.path.join(ROOT, 'runtime', 'assets', 'game_pieces')

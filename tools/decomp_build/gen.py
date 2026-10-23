@@ -51,7 +51,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "recomp"))
-import builds as game_builds  # noqa: E402
+import builds as game_builds
 
 
 def read_units(src):
@@ -102,7 +102,7 @@ GLUE_MARK = "/* WWHD glue"
 
 
 def verify_marks_text(text):
-    text = re.sub(r"/\*.*?\*/", " ", text, flags=re.S)   # commented-out VERIFY lines do not count
+    text = re.sub(r"/\*.*?\*/", " ", text, flags=re.DOTALL)   # commented-out VERIFY lines do not count
     text = re.sub(r"//[^\n]*", "", text)
     marks = [(m.start(), int(m.group(1), 16), m.group(2).strip())
              for m in re.finditer(r"\bVERIFY\(\s*(0x[0-9A-Fa-f]+)\s*,\s*([^)]*)\)", text)]
@@ -113,10 +113,10 @@ def verify_marks_text(text):
 
 
 FILE_SCOPE_VIEW = re.compile(r"^((?:const\s+)?[A-Za-z_][^\n=;]*?(?:&\s*(\w+)|\(&(\w+)\)(?:\[\d+\])+)\s*=\s*"
-                             r"gabi::(?:object_at|local_static)<)", re.M)
-EXT_STUB = re.compile(r"^(?!static\b|inline\b)(\S[^\n]*/\* other unit \(ext\) \*/)$", re.M)
+                             r"gabi::(?:object_at|local_static)<)", re.MULTILINE)
+EXT_STUB = re.compile(r"^(?!static\b|inline\b)(\S[^\n]*/\* other unit \(ext\) \*/)$", re.MULTILINE)
 EXTERN_NAME = re.compile(r"\bextern\s+[^;{]*?(\w+)\s*\)?\s*(?:\[[^\]]*\]\s*)*;")
-STATIC_DECL = re.compile(r"^static\s+[^;(=\n]*?\b(\w+)\s*(?:\[[^\]\n]*\]\s*)*[;=({]", re.M)
+STATIC_DECL = re.compile(r"^static\s+[^;(=\n]*?\b(\w+)\s*(?:\[[^\]\n]*\]\s*)*[;=({]", re.MULTILINE)
 
 
 class Glue:
@@ -213,7 +213,7 @@ def link_statics(text, statics):
     return FILE_SCOPE_VIEW.sub(lambda m: ("static " if (m.group(2) or m.group(3)) in statics else "") + m.group(1), text)
 
 
-TU_DATA = re.compile(r"^const gc_tu_data gc_tu\s*=\s*\{", re.M)
+TU_DATA = re.compile(r"^const gc_tu_data gc_tu\s*=\s*\{", re.MULTILINE)
 
 
 def tu_data_fields(text):
@@ -223,7 +223,7 @@ def tu_data_fields(text):
     while depth:
         depth += {"{": 1, "}": -1}.get(text[i], 0)
         i += 1
-    body = re.sub(r"/\*.*?\*/|//[^\n]*", " ", text[m.end():i - 1], flags=re.S)
+    body = re.sub(r"/\*.*?\*/|//[^\n]*", " ", text[m.end():i - 1], flags=re.DOTALL)
     fields, depth, cur = {}, 0, ""
     for ch in body + ",":
         if ch == "," and depth == 0:

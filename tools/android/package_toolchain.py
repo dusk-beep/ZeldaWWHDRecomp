@@ -8,10 +8,10 @@ stays in assets; no downloaded executable is run from writable app storage.
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import shutil
 import struct
 import zipfile
+from pathlib import Path
 
 from build_toolchain import LLVM_REVISION, NDK_REVISION
 

@@ -1,5 +1,6 @@
 """Curated ABI facts checked against explicit public declarations/register adapters."""
 import re
+
 from public_sdk_layouts import body_of
 
 ENUMS = {

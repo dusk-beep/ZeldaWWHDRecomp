@@ -21,7 +21,16 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from funcdb import (GenIndex, load_names, signature, arg_regs, stack_words, Dataflow, RetWidth, CALL_RE, INT_ARGS, FLT_ARGS)
+from funcdb import (
+    CALL_RE,
+    Dataflow,
+    GenIndex,
+    RetWidth,
+    arg_regs,
+    load_names,
+    signature,
+    stack_words,
+)
 
 IMP_RE = re.compile(r"\b(imp_\w+)\(c\)")
 SITE_RE = re.compile(r"\b(site_[0-9A-F]{8})\(c\)")
@@ -62,10 +71,7 @@ def instrument(text, new_name, cov):
         if not cov:
             continue
         s = ln.strip()
-        if ln.startswith("L_"):
-            out.append("    VM_COV(0, %d);" % nb)
-            nb += 1
-        elif s.startswith("if (") or s.startswith("c->ctr--; if ("):
+        if ln.startswith("L_") or s.startswith("if (") or s.startswith("c->ctr--; if ("):
             out.append("    VM_COV(0, %d);" % nb)
             nb += 1
     return "\n".join(out), nb
@@ -97,7 +103,7 @@ def main():
     unit = read_unit(os.path.join(root, "tools", "verify", "units", a.unit + ".txt"))
     tested = []
     for s in unit["src"]:
-        for m in re.finditer(r"^\s*VERIFY\(\s*0x([0-9A-Fa-f]{8})\s*,", open(os.path.join(root, s)).read(), re.M):
+        for m in re.finditer(r"^\s*VERIFY\(\s*0x([0-9A-Fa-f]{8})\s*,", open(os.path.join(root, s)).read(), re.MULTILINE):
             tested.append(int(m.group(1), 16))
     tested = sorted(set(tested))
     gen = GenIndex(os.path.join(build, "gen"))

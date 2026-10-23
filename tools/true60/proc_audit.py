@@ -2,9 +2,11 @@
 """Audit Link's procedures (GameCube source) for inline per-step code that the shared primitives
 do not cover: compound assignments / increments on members, direct speed/position changes.
 usage: proc_audit.py  -> per proc: inline per-step statements (file:line)"""
-import glob, re
+import glob
+import re
+
 SRC = sorted(glob.glob('tww/src/d/actor/d_a_player_main.cpp') + glob.glob('tww/src/d/actor/d_a_player_*.inc'))
-FN = re.compile(r'^\S.*\bdaPy_lk_c::(proc\w+)\(\)\s*\{', re.M)
+FN = re.compile(r'^\S.*\bdaPy_lk_c::(proc\w+)\(\)\s*\{', re.MULTILINE)
 OPS = re.compile(r'(\b(?:m\w+|speed\w*|current\.\w+(?:\.\w)?|shape_angle\.\w|gravity|old\.\w+)(?:\.\w+|\[\w+\])*)\s*(\+=|-=|\*=|/=)|'
                  r'(\b(?:m\w+)(?:\.\w+)*)(\+\+|--)|(\+\+|--)(m\w+(?:\.\w+)*)')
 procs = {}

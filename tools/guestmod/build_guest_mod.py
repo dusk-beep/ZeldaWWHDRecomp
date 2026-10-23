@@ -20,17 +20,18 @@ import json
 import os
 import platform
 import re
-from pathlib import Path
 import shlex
 import struct
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import guestmod  # noqa: E402
 from builds import by_name, canonical_build
+
+import guestmod
 
 REPO = os.path.dirname(os.path.dirname(HERE))
 CFLAGS = ["-O2", "-ffp-contract=off", "-fno-strict-aliasing", "-w", "-fPIC", "-shared"]
@@ -186,9 +187,7 @@ def build(pkg, out, base, cc, include, game_build=None):
         f.write(t.emit(man["id"]))
     t1 = time.time()
     cmd = cc + CFLAGS + ["-I", include, src, "-o", mod + ".tmp"]
-
-env = os.environ.copy()
-
+    env = os.environ.copy()
     env["TMPDIR"] = os.path.join(out, "tmp")
     os.makedirs(env["TMPDIR"], exist_ok=True)
     p = subprocess.run(cmd, capture_output=True, text=True, env=env)

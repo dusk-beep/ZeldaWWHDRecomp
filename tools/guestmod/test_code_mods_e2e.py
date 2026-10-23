@@ -5,16 +5,16 @@ This is deliberately outside unit-test discovery: it needs the player's extracte
 USA or EU game, a compatible regional slot1 state, a built/installed release and clang/lld.
 """
 import argparse
-import datetime
 import contextlib
+import datetime
 import importlib.util
 import json
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import sys
 import time
+from pathlib import Path
 from types import SimpleNamespace
 
 REPO = Path(__file__).resolve().parents[2]

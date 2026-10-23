@@ -3,6 +3,7 @@ import os
 import tempfile
 import unittest
 from unittest import mock
+
 from ondevice_setup import main, read_key_descriptors
 
 
@@ -47,8 +48,9 @@ class KeyDescriptors(unittest.TestCase):
                      'set paths for real native-bridge checks over the authored encrypted disc')
 class NativeKeySelection(unittest.TestCase):
     def test_candidates_through_production_adapter_and_process_bridge(self):
-        from pathlib import Path
         import subprocess
+        from pathlib import Path
+
         from setup_adapter import Adapter
         root = Path(os.environ['WWHD_KEY_TEST_FIXTURES'])
         disc = (root / 'disc.key').read_bytes()

@@ -20,8 +20,7 @@ def demangle(m):
     parts = []
     if rest.startswith("Q") and len(rest) > 1 and rest[1].isdigit():
         n, rest = int(rest[1]), rest[2:]
-        if rest.startswith("_"):
-            rest = rest[1:]
+        rest = rest.removeprefix("_")
         for _ in range(n):
             k = re.match(r"(\d+)", rest)
             if not k:

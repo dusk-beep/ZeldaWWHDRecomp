@@ -4,7 +4,6 @@ import subprocess
 import sys
 import unittest
 
-
 EXECUTABLE = None
 
 

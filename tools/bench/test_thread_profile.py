@@ -11,8 +11,7 @@ import thread_profile as tp
 def write_samples(path, tags, samples):
     with open(path, "wb") as f:
         f.write(b"WWHDSAMP1 %d\n" % len(tags))
-        for t in tags:
-            f.write(t.encode() + b"\n")
+        f.writelines(t.encode() + b"\n" for t in tags)
         for thread, frames in samples:
             f.write(struct.pack("<II", thread, len(frames)))
             f.write(struct.pack("<%dQ" % len(frames), *frames))

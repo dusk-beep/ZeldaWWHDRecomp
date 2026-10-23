@@ -15,10 +15,14 @@ match, tools/recomp/recomp.py):
 Output: build/true60_survey.tsv (one line per source file) and a summary on stdout.
 usage: actor_survey.py [filter substring of the source file, e.g. d_a_]
 """
-import collections, glob, os, re, sys
+import collections
+import glob
+import os
+import re
+import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import smooth_sites  # noqa: E402
+import smooth_sites
 
 PRIMS = {
     '0200ECD4': 'addCalc', '0200ED84': 'addCalc2', '0200EDC8': 'addCalc0', '0200EE00': 'addCalcPos',
@@ -31,7 +35,7 @@ PRIMS = {
     '027F2FC4': 'frameCtrl', '025E535C': 'McaMorf::play', '025E742C': 'baseAnm::play', '025E65FC': 'McaMorf2::play',
     '0282167C': 'emitterCalc',
 }
-FN = re.compile(r'^void f_([0-9A-F]{8})(?:_orig)?\(Cpu\* __restrict c\) \{\n(.*?)^\}', re.S | re.M)
+FN = re.compile(r'^void f_([0-9A-F]{8})(?:_orig)?\(Cpu\* __restrict c\) \{\n(.*?)^\}', re.DOTALL | re.MULTILINE)
 CALL = re.compile(r'f_([0-9A-F]{8})(?:_orig)?\(c\);')
 LD = re.compile(r'c->r\[(\d+)\] = \(uint32_t\)\(int32_t\)\(int16_t\)ld16\(c->r\[(\d+)\] \+ 0x([0-9A-F]+)u\)|c->r\[(\d+)\] = ld(16|32)\(c->r\[(\d+)\] \+ 0x([0-9A-F]+)u\)')
 ADD = re.compile(r'c->r\[(\d+)\] = c->r\[(\d+)\] \+ 0x(00000001|FFFFFFFF)u;')

@@ -3,8 +3,9 @@ import types
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-from PIL import Image
+
 import run_picture_check as pictures
+from PIL import Image
 
 
 class CaptureEvidenceTest(unittest.TestCase):

@@ -6,16 +6,17 @@ display settings are restored even if assertions fail. Never run on a phone.
 """
 import argparse
 import hashlib
-import os
 import json
+import os
 import platform
-from pathlib import Path
 import re
 import shlex
 import subprocess
 import threading
-import adb_util
 import time
+from pathlib import Path
+
+import adb_util
 
 PACKAGE = "org.wwhdrecomp.wwhd"
 

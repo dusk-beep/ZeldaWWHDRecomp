@@ -5,7 +5,6 @@ vertex buffer _p0/_n0/_u0 stride 48, one shape, one material with a colour textu
 render info, render state, shader assignment, samplers and parameters). No game data."""
 import copy
 import importlib.util
-import json
 import os
 import pathlib
 import struct
@@ -15,11 +14,11 @@ import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import actor_model as model  # noqa: E402
-import collision_mesh  # noqa: E402
-import multi_material  # noqa: E402
-import test_notebook_model as fixture  # noqa: E402
-from skinned_actor_model import append_dictionary, append_string  # noqa: E402
+import actor_model as model
+import collision_mesh
+import multi_material
+import test_notebook_model as fixture
+from skinned_actor_model import append_dictionary, append_string
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 base = model.base

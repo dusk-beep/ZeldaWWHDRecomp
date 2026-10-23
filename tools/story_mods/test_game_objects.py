@@ -2,11 +2,17 @@
 """tools/story_mods/game_objects.py on a synthetic game folder (no game data): the recipe checks, which archives
 the game has (a pack's header, content/Common/Object), the game's own placements of each variant (a stage
 archive's actor list), the --list and --json output and its exit code."""
-import json, os, struct, subprocess, sys, tempfile, unittest
+import json
+import os
+import struct
+import subprocess
+import sys
+import tempfile
+import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import game_objects as go  # noqa: E402
+import game_objects as go
 
 
 def sarc(files):

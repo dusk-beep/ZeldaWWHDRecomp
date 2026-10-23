@@ -4,19 +4,20 @@ One dedicated embedded-Python worker owns an Adapter. Native extraction/compiler
 execution and the Android service/UI are supplied separately; this module never
 selects a desktop toolchain and never invokes the installer's destructive install().
 """
-from contextlib import contextmanager, redirect_stdout, redirect_stderr
 import hashlib
 import importlib.util
 import json
 import os
-from pathlib import Path
 import runpy
 import shutil
 import sys
-import time
 import threading
-from types import SimpleNamespace
+import time
 import uuid
+from contextlib import contextmanager, redirect_stderr, redirect_stdout
+from pathlib import Path
+from types import SimpleNamespace
+
 from native_process import ProcessBridge
 
 

@@ -1,12 +1,12 @@
 """Validate packaging rejection paths with authored ELF metadata, never a compiler substitute."""
 import json
-from pathlib import Path
 import struct
 import tempfile
 import unittest
 import zipfile
+from pathlib import Path
 
-from package_toolchain import LLVM_REVISION, NDK_REVISION, NAMES, digest, package
+from package_toolchain import LLVM_REVISION, NAMES, NDK_REVISION, digest, package
 
 
 def elf(machine=183, interpreter=b"/system/bin/linker64\0"):

@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Disassemble cking.rpx .text: ppcdis.py ADDR [COUNT]"""
-import sys, os
+import os
+import sys
+
 sys.path.insert(0, os.path.dirname(__file__))
-from rpx import Rpx
 import capstone
+
+from rpx import Rpx
+
 _rpx = None
 def dis(addr, count=32, path=os.path.join(os.path.dirname(__file__), "..", "game/code/cking.rpx")):
     global _rpx

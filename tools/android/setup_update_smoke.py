@@ -6,11 +6,12 @@ Use a minimal debug APK: its missing setup resources make dispatched work fail h
 """
 import argparse
 import json
-from pathlib import Path
 import shlex
 import subprocess
-import adb_util
 import time
+from pathlib import Path
+
+import adb_util
 
 PACKAGE = "org.wwhdrecomp.wwhd"
 

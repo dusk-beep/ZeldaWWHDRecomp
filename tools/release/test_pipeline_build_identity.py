@@ -1,9 +1,9 @@
 """Exercise dirty-source invalidation through CMake's actual build dependency graph."""
-from pathlib import Path
 import shutil
 import subprocess
 import tempfile
 import unittest
+from pathlib import Path
 
 
 class PipelineBuildIdentityTest(unittest.TestCase):

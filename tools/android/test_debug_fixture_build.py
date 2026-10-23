@@ -1,10 +1,10 @@
 """Keep authored fixture acceptance isolated from real-user/release validation."""
 import importlib.util
 import io
-from pathlib import Path
 import tempfile
 import unittest
 import zipfile
+from pathlib import Path
 
 from debug_fixture_build import register, synthetic_rpx
 from prepare_python import source_files

@@ -14,7 +14,9 @@ The subtraction must be within WINDOW instructions before, with fX not redefined
 
 usage: smooth_sites.py ADDR [ADDR ...]   (function entry addresses, hex)
 """
-import glob, re, sys
+import glob
+import re
+import sys
 
 WINDOW = 24
 FN_RE = r'^void f_%s(?:_orig)?\(Cpu\* __restrict c\) \{\n(.*?)^\}'
@@ -33,7 +35,7 @@ GPRDEF = re.compile(r'c->r\[(\d+)\] = ')
 def body(addr):
     for f in sorted(glob.glob('build/gen/code_*.c')):
         t = open(f).read()
-        m = re.search(FN_RE % addr, t, re.S | re.M)
+        m = re.search(FN_RE % addr, t, re.DOTALL | re.MULTILINE)
         if m:
             return m.group(1)
     return None

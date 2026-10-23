@@ -8,9 +8,9 @@ import sys
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import lyt  # noqa: E402
-from lyt import bflan, bflyt, binio  # noqa: E402
-from lyt.sections import wnd1  # noqa: E402
+import lyt
+from lyt import bflan, bflyt, binio
+from lyt.sections import wnd1
 
 
 def desc(panes, materials=None, groups=None, animations=None):

@@ -3,9 +3,10 @@ import copy
 import math
 import struct
 import unittest
+
 import actor_animation as animation
 import actor_model
-from skinned_actor_model import append_dictionary, append_string
+from skinned_actor_model import append_dictionary
 
 
 def fixture(interpolation='LINEAR'):

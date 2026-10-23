@@ -5,13 +5,13 @@ Pass --reference DIR to compare every C/header byte against a desktop run.
 This module uses no subprocesses, so the Android embedding can invoke main().
 """
 import argparse
-from contextlib import contextmanager
 import hashlib
 import json
-from pathlib import Path
 import struct
 import sys
 import time
+from contextlib import contextmanager
+from pathlib import Path
 
 
 def synthetic_rpx():

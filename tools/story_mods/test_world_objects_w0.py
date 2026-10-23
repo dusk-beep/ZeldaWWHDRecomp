@@ -1,8 +1,10 @@
 """Original render assets: reproducibility and visible deck dimensions, no game data."""
 import importlib.util
-from pathlib import Path
 import unittest
+from pathlib import Path
+
 import actor_model
+
 ROOT=Path(__file__).resolve().parents[2]
 ASSETS=ROOT/'examples/guest-mods/world-objects-w0/assets'
 spec=importlib.util.spec_from_file_location('w0_fixtures',ASSETS/'make_fixtures.py')

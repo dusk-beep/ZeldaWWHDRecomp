@@ -2,13 +2,13 @@
 """Verify a live native session survives replacement Android Activities, on an emulator."""
 import argparse
 import json
-from pathlib import Path
 import re
 import shlex
 import subprocess
-import adb_util
 import time
+from pathlib import Path
 
+import adb_util
 from display_smoke import primary_preview_clear
 
 PACKAGE = "org.wwhdrecomp.wwhd"

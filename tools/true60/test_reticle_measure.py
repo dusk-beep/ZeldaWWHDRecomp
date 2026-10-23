@@ -1,6 +1,7 @@
 import unittest
+
 from PIL import Image, ImageDraw
-from reticle_measure import read_trace, projection_metrics, red_components
+from reticle_measure import projection_metrics, read_trace, red_components
 
 
 class ReticleMeasurementTest(unittest.TestCase):

@@ -1,10 +1,10 @@
 import json
-from pathlib import Path
-import tempfile
 import subprocess
 import sys
+import tempfile
 import time
 import unittest
+from pathlib import Path
 
 import shader_prebuild as prebuild
 
@@ -63,8 +63,8 @@ class ShaderPrebuildTests(unittest.TestCase):
         self.assertEqual(self.calls, [])
 
     def test_preparation_uses_device_cache_directory_not_inherited_file(self):
-        from unittest.mock import patch
         import os
+        from unittest.mock import patch
         with patch.dict(os.environ, {'WWHD_VK_PIPELINE_CACHE': '/synthetic/old-override.bin'}):
             self.assertEqual(self.prepare()['status'], 'ready')
         env = self.calls[-1][1]

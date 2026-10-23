@@ -1,7 +1,6 @@
 """Original synthetic fixtures: no game resources required."""
 import copy
 import hashlib
-import collision_mesh
 import importlib.util
 import json
 import os
@@ -11,6 +10,7 @@ import tempfile
 import unittest
 
 import actor_model as model
+import collision_mesh
 import test_notebook_model as fixture
 
 ROOT=pathlib.Path(__file__).resolve().parents[2]

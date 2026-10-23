@@ -39,9 +39,9 @@ Output:
   OUTDIR/report.txt      statistics and unhandled instructions
 """
 import argparse
-import io
 import bisect
 import collections
+import io
 import json
 import os
 import re
@@ -50,12 +50,13 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 import builds as game_builds
-from analyze import Program, sext
-from ppc2c import translate, Unhandled
-from rpx import R_PPC_ADDR16_HA, R_PPC_ADDR16_LO, R_PPC_ADDR16_HI
-import ppc2c
 import crlive
 import leaflocal
+import ppc2c
+from analyze import Program, sext
+from ppc2c import Unhandled, translate
+
+from rpx import R_PPC_ADDR16_HA, R_PPC_ADDR16_HI, R_PPC_ADDR16_LO
 
 
 class _Output(io.StringIO):

@@ -9,13 +9,13 @@ import argparse
 import hashlib
 import json
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import tarfile
 import time
 import urllib.request
 import zipfile
+from pathlib import Path
 
 VERSION = "3.14.8"
 PYTHON_PROGRAM = "libwwhd-python-driver.so"  # AndroidGuestTools.java names it too
@@ -190,8 +190,9 @@ def main():
             # tiny synthetic translation; they are used only by the debug probe.
             import sys
             sys.path.insert(0, str(root / "tools/recomp"))
-            import stubgen
             import tempfile
+
+            import stubgen
             with tempfile.TemporaryDirectory(dir=out) as temporary:
                 stubgen.main(temporary)
                 write_entry(bundle, "tools/android/runtime_fixture.c", runtime_fixture_source(temporary))

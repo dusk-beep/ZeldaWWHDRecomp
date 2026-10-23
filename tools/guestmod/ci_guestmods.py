@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """Compile the synthetic guest examples with the same host toolchain as setup; no game files."""
 import os
-from pathlib import Path
 import shlex
 import shutil
 import subprocess
 import sys
+from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "tools" / "installer"))
-import setup  # noqa: E402
+import setup
 
 
 def main():

@@ -3,8 +3,8 @@
 Exit 1 remains a command result when check=False. Only transport errors are
 retried; application assertions and ordinary remote command failures are not.
 """
-import shlex
 import re
+import shlex
 import subprocess
 import sys
 import time

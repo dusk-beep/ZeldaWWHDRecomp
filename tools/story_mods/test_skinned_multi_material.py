@@ -19,9 +19,9 @@ import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import skinned_actor_model as skin  # noqa: E402
-import test_notebook_model as fixture  # noqa: E402
-from skinned_actor_model import append_dictionary, append_string  # noqa: E402
+import skinned_actor_model as skin
+import test_notebook_model as fixture
+from skinned_actor_model import append_dictionary, append_string
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 base = skin.base

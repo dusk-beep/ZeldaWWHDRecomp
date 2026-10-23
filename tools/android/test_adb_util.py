@@ -1,13 +1,13 @@
 """Transport faults must recover without turning remote failures into success."""
 import io
 import os
-from pathlib import Path
 import shlex
 import subprocess
 import sys
 import tempfile
 import unittest
 from contextlib import redirect_stderr
+from pathlib import Path
 from unittest.mock import patch
 
 import adb_util

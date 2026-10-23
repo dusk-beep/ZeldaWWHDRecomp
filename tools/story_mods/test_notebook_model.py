@@ -11,8 +11,9 @@ import zlib
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.dirname(HERE))
-import notebook_model as m  # noqa: E402
-import shaderprep  # noqa: E402
+import notebook_model as m
+
+import shaderprep
 
 
 def png(w, h, rgba):

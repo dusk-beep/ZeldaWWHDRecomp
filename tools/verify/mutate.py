@@ -20,7 +20,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
-import verify  # noqa: E402
+import verify
 
 
 def bodies(text):
@@ -42,7 +42,7 @@ def mutants(text, start, end):
     # blank out comments (keeping offsets) so mutations only hit code
     # (and the WWHD_FUNC/VERIFY bookkeeping, which only names the function)
     body = re.sub(r"/\*.*?\*/|//[^\n]*|WWHD_FUNC\([^;]*;|VERIFY\([^;]*;", lambda m: re.sub(r"[^\n]", " ", m.group(0)),
-                  text[start:end], flags=re.S)
+                  text[start:end], flags=re.DOTALL)
     res = []
     for m in re.finditer(r"(?<![\w.])(\d+\.\d+f|\d+)(?![\w.x])", body):
         lit = m.group(1)

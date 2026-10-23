@@ -8,15 +8,16 @@ import argparse
 import json
 import math
 import os
-from pathlib import Path
 import shutil
 import struct
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "bench"))
-from run_bench import other_games as running_games, other_benchmarks
+from run_bench import other_benchmarks
+from run_bench import other_games as running_games
 
 
 def other_games(own_pid=None, limit=1):

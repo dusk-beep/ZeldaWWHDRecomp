@@ -32,7 +32,7 @@ import zlib
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, os.path.join(REPO, "tools"))
-import shaderprep  # noqa: E402  (Yaz0 and SARC readers)
+import shaderprep
 
 ARCHIVE = "content/Common/Object/Vbeso.szs"
 TEXTURE = "koni_BessoKenrosyo_128x128"  # the template's colour texture (its toon ramp ZAtoon is kept)

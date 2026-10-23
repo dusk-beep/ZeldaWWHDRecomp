@@ -8,7 +8,8 @@ import os
 import re
 import struct
 
-from xref import Xref  # noqa: F401  (sets up the tools path)
+from xref import Xref
+
 from rpx import R_PPC_ADDR32
 
 METHODS = ("Create", "Delete", "Execute", "IsDelete", "Draw")
@@ -33,11 +34,11 @@ def decomp_profiles(tww):
                 continue
             src = open(os.path.join(d, f), encoding="utf-8", errors="replace").read()
             tables = {}
-            for m in re.finditer(r"actor_method_class\s+(\w+)\s*=\s*\{(.*?)\};", src, re.S):
+            for m in re.finditer(r"actor_method_class\s+(\w+)\s*=\s*\{(.*?)\};", src, re.DOTALL):
                 fns = re.findall(r"\(process_method_func\)\s*([\w:]+)", m.group(2))
                 if len(fns) == 5:
                     tables[m.group(1)] = fns
-            for m in re.finditer(r"actor_process_profile_definition2?\s+g_profile_\w+\s*=\s*\{(.*?)\};", src, re.S):
+            for m in re.finditer(r"actor_process_profile_definition2?\s+g_profile_\w+\s*=\s*\{(.*?)\};", src, re.DOTALL):
                 body = m.group(1)
                 pn = re.search(r"(fpcNm_\w+_e)", body)
                 tb = re.search(r"&(\w+)\s*,\s*/\*\s*Status|Actor SubMtd\s*\*/\s*&(\w+)", body)
@@ -72,6 +73,7 @@ def wwhd_profiles(x):
 
 if __name__ == "__main__":
     import sys
+
     from xref import Xref
     x = Xref(sys.argv[1])
     dp = decomp_profiles(sys.argv[2])

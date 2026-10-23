@@ -7,13 +7,14 @@ establish supported-game setup or automatic successful rebuild after an APK upda
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import re
 import shlex
 import subprocess
-import adb_util
 import time
 import zipfile
+from pathlib import Path
+
+import adb_util
 
 PACKAGE = "org.wwhdrecomp.wwhd"
 

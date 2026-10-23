@@ -1,11 +1,13 @@
 """Game-free entry point used only by the debug PythonSmokeActivity."""
-from debug_fixture_build import register as register_fixture_build
 import json
-from pathlib import Path
 import shutil
+from pathlib import Path
 
-from android_fixture import main as fixture_main, inventory
-from setup_adapter import Adapter, Paused, digest, inventory as file_hashes
+from android_fixture import inventory
+from android_fixture import main as fixture_main
+from debug_fixture_build import register as register_fixture_build
+from setup_adapter import Adapter, Paused, digest
+from setup_adapter import inventory as file_hashes
 
 
 def main(argv):
@@ -127,9 +129,10 @@ def main(argv):
         metrics["extraction_verified"] = True
     # Interrupt a real ppc2c invocation, with an authored delay giving the
     # policy watcher time to arm. Production translator files stay unchanged.
-    import ppc2c
     import threading
     import time
+
+    import ppc2c
     requested = threading.Event()
     interrupted = Adapter(package, output / "paused-translation", "synthetic-v1",
                           events.append, requested.is_set)
@@ -176,6 +179,7 @@ def main(argv):
     if compiler:
         import ctypes
         from types import SimpleNamespace
+
         from android_fixture import HARNESS
         compile_gen = output / "compile-gen"
         shutil.copytree(generated, compile_gen)

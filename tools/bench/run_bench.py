@@ -24,8 +24,8 @@ import hashlib
 import json
 import os
 import re
-import shutil
 import shlex
+import shutil
 import signal
 import statistics
 import subprocess

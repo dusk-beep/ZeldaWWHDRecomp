@@ -22,33 +22,33 @@ Android Python source archives must not contain debug fixture registration or sm
 entry points. Only debug CI artifacts may opt in with --allow-android-test-fixtures.
 Exit status 1 lists every problem.
 """
-import io
 import hashlib
+import io
 import json
 import os
 import re
 import struct
 import sys
+import xml.etree.ElementTree as ET
 import zipfile
 import zlib
-import xml.etree.ElementTree as ET
 
 BAD_NAME = [
     (re.compile(r"(^|/)code_\d+\.c$"), "generated game code"),
     (re.compile(r"(^|/)(table|imports)\.c$"), "generated game code tables"),
     (re.compile(r"(^|/)imports\.json$"), "generated import table"),
     (re.compile(r"(^|/)funcs\.h$"), "generated function list"),
-    (re.compile(r"\.(rpx|rpl|wux|wud|iso|wua|rvz|gci)$", re.I), "game executable or disc image"),
-    (re.compile(r"\.key$", re.I), "key file"),
-    (re.compile(r"(^|/)title\.(tik|tmd|cert)$", re.I), "disc ticket/metadata"),
-    (re.compile(r"\.sav$", re.I), "save file"),
-    (re.compile(r"(^|/)(shaders|headstart|template|shaderprep_template|spirv|vkpipelines|testcache|mycache)\.bin$", re.I), "shader cache"),
-    (re.compile(r"\.(metallib|spv)$", re.I), "compiled shader cache"),
-    (re.compile(r"(^|/)(shadercache|vulkan-shaders)/", re.I), "local shader cache tree"),
+    (re.compile(r"\.(rpx|rpl|wux|wud|iso|wua|rvz|gci)$", re.IGNORECASE), "game executable or disc image"),
+    (re.compile(r"\.key$", re.IGNORECASE), "key file"),
+    (re.compile(r"(^|/)title\.(tik|tmd|cert)$", re.IGNORECASE), "disc ticket/metadata"),
+    (re.compile(r"\.sav$", re.IGNORECASE), "save file"),
+    (re.compile(r"(^|/)(shaders|headstart|template|shaderprep_template|spirv|vkpipelines|testcache|mycache)\.bin$", re.IGNORECASE), "shader cache"),
+    (re.compile(r"\.(metallib|spv)$", re.IGNORECASE), "compiled shader cache"),
+    (re.compile(r"(^|/)(shadercache|vulkan-shaders)/", re.IGNORECASE), "local shader cache tree"),
     (re.compile(r"(^|/)(game|content|meta)/"), "game file tree"),
     (re.compile(r"(^|/)build/gen"), "recompiler output"),
     (re.compile(r"(^|/)(lib)?gamecode\.(a|lib)$"), "compiled game code"),
-    (re.compile(r"(^|/)common\.key$", re.I), "Wii U common key"),
+    (re.compile(r"(^|/)common\.key$", re.IGNORECASE), "Wii U common key"),
 ]
 TEXT_EXT = {".py", ".txt", ".md", ".json", ".sh", ".command", ".bat", ".ps1", ".h", ".hpp", ".c", ".cpp", ".inl",
             ".cfg", ".ini", ".xml", ".plist", ".toml", ".yml", ".yaml", ".rsp", ""}

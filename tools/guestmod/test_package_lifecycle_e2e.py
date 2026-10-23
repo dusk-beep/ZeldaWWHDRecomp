@@ -10,12 +10,12 @@ import hashlib
 import importlib.util
 import json
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import sys
 import time
 import zipfile
+from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 

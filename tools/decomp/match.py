@@ -194,6 +194,7 @@ def main():
 
 def legacy_callgraph(x, tww, out):
     import math
+
     from callgraph import wwhd_calls
     from callmatch import propagate
     from features import gc_functions, wwhd_functions

@@ -2,9 +2,9 @@
 """Package our CMake-built Android extractor for Android-installed execution."""
 import argparse
 import json
-from pathlib import Path
 import shutil
 import subprocess
+from pathlib import Path
 
 from build_toolchain import NDK_REVISION
 from package_toolchain import MACHINES, digest, validate_executable

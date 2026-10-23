@@ -14,9 +14,16 @@ result in its data folder; modders use --list to see which id is which character
 
 usage: npc_catalogue.py --game <game dir with content/> [--recipe file ...] [--out catalogue.json] [--list] [--json]
 """
-import argparse, glob, json, os, re, struct, sys
+import argparse
+import glob
+import json
+import os
+import re
+import struct
+import sys
+
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-import shaderprep  # noqa: E402  (Yaz0 and SARC readers)
+import shaderprep
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_RECIPES = os.path.join(HERE, '..', '..', 'runtime', 'assets', 'npc_catalogue')

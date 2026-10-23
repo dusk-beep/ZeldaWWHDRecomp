@@ -12,9 +12,16 @@ Nothing it prints or writes holds game bytes: names the recipes already have, co
 
 usage: game_objects.py --game <game dir with content/> [--recipe file ...] [--list] [--placements] [--json]
 """
-import argparse, glob, json, os, re, struct, sys
+import argparse
+import glob
+import json
+import os
+import re
+import struct
+import sys
+
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-import shaderprep  # noqa: E402  (Yaz0 and SARC readers)
+import shaderprep
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_RECIPES = os.path.join(HERE, '..', '..', 'runtime', 'assets', 'game_objects')

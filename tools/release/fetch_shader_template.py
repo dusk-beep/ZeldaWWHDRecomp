@@ -2,11 +2,11 @@
 import hashlib
 import json
 import os
-from pathlib import Path
 import re
 import shlex
 import subprocess
 import tempfile
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 REPOSITORY = 'git@github.com:ZeldaWWHDRecomp/shader-template.git'

@@ -2,6 +2,7 @@
 """Find flicker in consecutive frame dumps: frame n differs from both neighbours
 while the neighbours agree. Usage: flicker.py FIRST LAST [dir]"""
 import sys
+
 import numpy as np
 from PIL import Image
 

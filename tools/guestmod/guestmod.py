@@ -17,6 +17,7 @@ wwhd_guest_abi.h). Undefined symbols resolve as follows:
 Errors (unsupported relocations or instructions, unknown symbols) are reported in plain words and
 make the translation fail; nothing of the game is read or embedded.
 """
+
 import argparse
 import json
 import os
@@ -26,8 +27,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "recomp"))
-from ppc2c import translate, Unhandled  # noqa: E402
 from builds import canonical_build
+from ppc2c import Unhandled, translate
 
 TRANSLATOR_VERSION = "guestmod-0.2"
 
@@ -49,9 +50,24 @@ def sext(v, bits):
 class Elf:
     def __init__(self, data):
         if data[:4] != b"\x7fELF" or data[4] != 1 or data[5] != 2:
-            raise ModError("not a 32-bit big-endian ELF file (build the mod for powerpc-unknown-eabi)")
-        (e_type, e_machine, _, _, _, e_shoff, _, _, _, _, e_shentsize, e_shnum, e_shstrndx) = struct.unpack_from(
-            ">HHIIIIIHHHHHH", data, 16)
+            raise ModError(
+                "not a 32-bit big-endian ELF file (build the mod for powerpc-unknown-eabi)"
+            )
+        (
+            e_type,
+            e_machine,
+            _,
+            _,
+            _,
+            e_shoff,
+            _,
+            _,
+            _,
+            _,
+            e_shentsize,
+            e_shnum,
+            e_shstrndx,
+        ) = struct.unpack_from(">HHIIIIIHHHHHH", data, 16)
         if e_machine != 20:
             raise ModError("not a PowerPC ELF file (machine %d)" % e_machine)
         if e_type != 1:
@@ -59,10 +75,23 @@ class Elf:
         self.data = data
         self.sections = []
         for i in range(e_shnum):
-            name, typ, flags, addr, off, size, link, info, align, entsize = struct.unpack_from(
-                ">IIIIIIIIII", data, e_shoff + i * e_shentsize)
-            self.sections.append(dict(idx=i, name_off=name, type=typ, flags=flags, off=off, size=size,
-                                      link=link, info=info, align=max(align, 1), entsize=entsize))
+            name, typ, flags, addr, off, size, link, info, align, entsize = (
+                struct.unpack_from(">IIIIIIIIII", data, e_shoff + i * e_shentsize)
+            )
+            self.sections.append(
+                dict(
+                    idx=i,
+                    name_off=name,
+                    type=typ,
+                    flags=flags,
+                    off=off,
+                    size=size,
+                    link=link,
+                    info=info,
+                    align=max(align, 1),
+                    entsize=entsize,
+                )
+            )
         strtab = self.sections[e_shstrndx]
         for s in self.sections:
             s["name"] = self.cstr(strtab["off"] + s["name_off"])
@@ -71,16 +100,26 @@ class Elf:
             if s["type"] == SHT_SYMTAB:
                 names = self.sections[s["link"]]
                 for k in range(s["size"] // 16):
-                    nm, value, size, info, other, shndx = struct.unpack_from(">IIIBBH", data, s["off"] + 16 * k)
-                    self.symbols.append(dict(name=self.cstr(names["off"] + nm), value=value, size=size,
-                                             type=info & 15, bind=info >> 4, shndx=shndx))
+                    nm, value, size, info, other, shndx = struct.unpack_from(
+                        ">IIIBBH", data, s["off"] + 16 * k
+                    )
+                    self.symbols.append(
+                        dict(
+                            name=self.cstr(names["off"] + nm),
+                            value=value,
+                            size=size,
+                            type=info & 15,
+                            bind=info >> 4,
+                            shndx=shndx,
+                        )
+                    )
 
     def cstr(self, off):
         end = self.data.index(b"\0", off)
         return self.data[off:end].decode("utf-8", "replace")
 
     def bytes_of(self, s):
-        return self.data[s["off"]:s["off"] + s["size"]]
+        return self.data[s["off"] : s["off"] + s["size"]]
 
 
 class Translator:
@@ -89,13 +128,18 @@ class Translator:
         self.base = base
         self.build = build or canonical_build()
         if not self.build.canonical and not any(
-                s["name"] == ".wwhd_addresses" and s["size"] > 0 and s["size"] % 4 == 0 and
-                self.elf.bytes_of(s) == b"\0\0\0\1" * (s["size"] // 4)
-                for s in elf.sections):
-            raise ModError("Mod uses an older SDK with unrelocatable USA data addresses; "
-                           "ask its author to rebuild with the European-compatible SDK")
+            s["name"] == ".wwhd_addresses"
+            and s["size"] > 0
+            and s["size"] % 4 == 0
+            and self.elf.bytes_of(s) == b"\0\0\0\1" * (s["size"] // 4)
+            for s in elf.sections
+        ):
+            raise ModError(
+                "Mod uses an older SDK with unrelocatable USA data addresses; "
+                "ask its author to rebuild with the European-compatible SDK"
+            )
         self.imm_override = {}
-        self.imports = {}   # call/branch site -> ("game"|"orig"|"svc", value)
+        self.imports = {}  # call/branch site -> ("game"|"orig"|"svc", value)
         self.services = []  # host service names, in order of first use
         self.layout()
         self.relocate()
@@ -104,12 +148,16 @@ class Translator:
     # ---- layout: code first, then read-only data, data, bss
     def layout(self):
         alloc = [s for s in self.elf.sections if s["flags"] & SHF_ALLOC and s["size"]]
-        rank = lambda s: (0 if s["flags"] & SHF_EXECINSTR else 2 if s["type"] == SHT_NOBITS else 1)
+        rank = lambda s: (
+            0 if s["flags"] & SHF_EXECINSTR else 2 if s["type"] == SHT_NOBITS else 1
+        )
         addr = self.base
         self.sec_addr = {}
         for s in sorted(alloc, key=lambda s: (rank(s), s["idx"])):
             if s["align"] > 65536 or s["align"] & (s["align"] - 1):
-                raise ModError("mod sections require power-of-two alignment no larger than 64 KiB")
+                raise ModError(
+                    "mod sections require power-of-two alignment no larger than 64 KiB"
+                )
             addr = (addr + s["align"] - 1) & ~(s["align"] - 1)
             self.sec_addr[s["idx"]] = addr
             addr += s["size"]
@@ -121,10 +169,15 @@ class Translator:
         for s in alloc:
             if s["type"] != SHT_NOBITS:
                 a = self.sec_addr[s["idx"]] - self.base
-                self.image[a:a + s["size"]] = self.elf.bytes_of(s)
-                self.image_end = max(self.image_end, self.sec_addr[s["idx"]] + s["size"])
-        self.text = [(self.sec_addr[s["idx"]], self.sec_addr[s["idx"]] + s["size"]) for s in alloc
-                     if s["flags"] & SHF_EXECINSTR]
+                self.image[a : a + s["size"]] = self.elf.bytes_of(s)
+                self.image_end = max(
+                    self.image_end, self.sec_addr[s["idx"]] + s["size"]
+                )
+        self.text = [
+            (self.sec_addr[s["idx"]], self.sec_addr[s["idx"]] + s["size"])
+            for s in alloc
+            if s["flags"] & SHF_EXECINSTR
+        ]
 
     def in_text(self, a):
         return any(lo <= a < hi for lo, hi in self.text)
@@ -149,22 +202,30 @@ class Translator:
         except ValueError as exc:
             # Public declaration names are available in source checkouts and release SDKs.
             from pathlib import Path
+
             header = Path(HERE).parents[1] / "runtime/guest/include/wwhd/functions.h"
             if not header.is_file():
                 header = Path(HERE).parents[1] / "sdk/guest/include/wwhd/functions.h"
             name = ""
             if header.is_file():
-                match = re.search(r"^#define WWHD_ADDR_(\w+) 0x%08X$" % address,
-                                  header.read_text(), re.M)
+                match = re.search(
+                    r"^#define WWHD_ADDR_(\w+) 0x%08X$" % address,
+                    header.read_text(),
+                    re.MULTILINE,
+                )
                 if match:
                     name = match[1] + " "
-            raise ModError("%s cannot use %s0x%08X on %s: %s" %
-                           ("Mod", name, address, self.build.name, exc)) from exc
+            raise ModError(
+                "%s cannot use %s0x%08X on %s: %s"
+                % ("Mod", name, address, self.build.name, exc)
+            ) from exc
 
     def symbol_value(self, sym):
         """(kind, value): kind 'addr' for a guest address, else an import kind."""
         if sym["shndx"] == 0:  # undefined
-            m = re.match(r"__wwhd_(game|orig|gdata)_(?:0x)?([0-9A-Fa-f]{1,8})$", sym["name"])
+            m = re.match(
+                r"__wwhd_(game|orig|gdata)_(?:0x)?([0-9A-Fa-f]{1,8})$", sym["name"]
+            )
             if m:
                 return m.group(1), int(m.group(2), 16)
             if not re.match(r"[A-Za-z_][A-Za-z0-9_]*$", sym["name"]):
@@ -184,7 +245,9 @@ class Translator:
             target = self.elf.sections[rs["info"]]
             tbase = self.sec_addr[rs["info"]]
             for k in range(rs["size"] // 12):
-                off, info, addend = struct.unpack_from(">IIi", self.elf.data, rs["off"] + 12 * k)
+                off, info, addend = struct.unpack_from(
+                    ">IIi", self.elf.data, rs["off"] + 12 * k
+                )
                 typ, sym = info & 0xFF, self.elf.symbols[info >> 8]
                 p = tbase + off
                 kind, val = self.symbol_value(sym)
@@ -192,9 +255,14 @@ class Translator:
                 if kind in ("game", "orig", "gdata"):
                     val = self.game_address(kind, (val + addend) & 0xFFFFFFFF)
                     addend = 0
-                if kind in ("orig", "svc") or (kind == "game" and typ in (R_PPC_REL24, R_PPC_REL14)):
+                if kind in ("orig", "svc") or (
+                    kind == "game" and typ in (R_PPC_REL24, R_PPC_REL14)
+                ):
                     if typ != R_PPC_REL24:
-                        raise ModError("%s: %s can only be called, not used as a value (%s)" % (where, sym["name"], typ))
+                        raise ModError(
+                            "%s: %s can only be called, not used as a value (%s)"
+                            % (where, sym["name"], typ)
+                        )
                     if kind == "svc" and val not in self.services:
                         self.services.append(val)
                     self.imports[p & ~3] = (kind, val)
@@ -221,19 +289,25 @@ class Translator:
                 elif typ == R_PPC_REL32:
                     self.put32(p, s - p)
                 else:
-                    raise ModError("%s: unsupported relocation type %d against %s (small data? build with "
-                                   "the SDK's flags)" % (where, typ, sym["name"]))
+                    raise ModError(
+                        "%s: unsupported relocation type %d against %s (small data? build with "
+                        "the SDK's flags)" % (where, typ, sym["name"])
+                    )
         hs = [s for s in self.elf.sections if s["name"] == ".wwhd_hooks"]
         self.hooks = []
         for s in hs:
             a = self.sec_addr.get(s["idx"])
             for k in range(s["size"] // 16):
-                kind, target, func, flags = struct.unpack_from(">IIII", self.image, a - self.base + 16 * k)
+                kind, target, func, flags = struct.unpack_from(
+                    ">IIII", self.image, a - self.base + 16 * k
+                )
                 if kind not in (1, 2, 3):
                     raise ModError("bad hook descriptor %d (kind %d)" % (k, kind))
                 if not self.in_text(func):
                     raise ModError("hook descriptor %d does not point to mod code" % k)
-                self.hooks.append((kind, self.game_address("game", target), func, flags))
+                self.hooks.append(
+                    (kind, self.game_address("game", target), func, flags)
+                )
 
     # ---- functions: symbols, call targets, address-taken code, tail-call targets
     def discover(self):
@@ -262,7 +336,12 @@ class Translator:
                     if a in self.imports:
                         continue
                     t = self.branch_target(a, self.word(a))
-                    if t is not None and self.in_text(t) and t not in entries and self.func_of(se, t) != self.func_of(se, a):
+                    if (
+                        t is not None
+                        and self.in_text(t)
+                        and t not in entries
+                        and self.func_of(se, t) != self.func_of(se, a)
+                    ):
                         new.add(t)
             if not new:
                 break
@@ -281,6 +360,7 @@ class Translator:
     @staticmethod
     def func_of(se, a):
         import bisect
+
         i = bisect.bisect_right(se, a) - 1
         return se[i] if i >= 0 else None
 
@@ -293,11 +373,21 @@ class Translator:
     def import_code(self, addr, tail):
         kind, val = self.imports[addr]
         if kind == "game":
-            return ("c->pc = 0x%08Xu; MUSTTAIL return ppc_dispatch(c);" if tail else "c->pc = 0x%08Xu; ppc_dispatch(c);") % val
+            return (
+                "c->pc = 0x%08Xu; MUSTTAIL return ppc_dispatch(c);"
+                if tail
+                else "c->pc = 0x%08Xu; ppc_dispatch(c);"
+            ) % val
         if kind == "orig":
-            return ("g_host->call_original(c, 0x%08Xu); return;" if tail else "g_host->call_original(c, 0x%08Xu);") % val
+            return (
+                "g_host->call_original(c, 0x%08Xu); return;"
+                if tail
+                else "g_host->call_original(c, 0x%08Xu);"
+            ) % val
         fn = "svc_%d" % self.services.index(val)
-        return "c->pc = 0x%08Xu; " % addr + (("MUSTTAIL return %s(c);" if tail else "%s(c);") % fn)
+        return "c->pc = 0x%08Xu; " % addr + (
+            ("MUSTTAIL return %s(c);" if tail else "%s(c);") % fn
+        )
 
     def branch(self, addr, tgt):
         if addr in self.imports:
@@ -327,7 +417,13 @@ class Translator:
     # ---- output
     def emit(self, mod_id):
         # only numbers and checked identifiers reach the C source; the id is reduced to safe characters
-        out = [PRELUDE % {"version": TRANSLATOR_VERSION, "id": re.sub(r"[^A-Za-z0-9._-]", "_", mod_id)[:64]}]
+        out = [
+            PRELUDE
+            % {
+                "version": TRANSLATOR_VERSION,
+                "id": re.sub(r"[^A-Za-z0-9._-]", "_", mod_id)[:64],
+            }
+        ]
         for i, name in enumerate(self.services):
             out.append("static PpcFunc svc_%d; /* %s */" % (i, name))
         for e in self.entries:
@@ -355,29 +451,53 @@ class Translator:
             if nxt in self.entries:
                 out.append("    MUSTTAIL return mf_%08X(c);" % nxt)
             else:
-                out.append("    ppc_unimplemented(c, 0x%08Xu, 0); /* fell off the end of the code */" % nxt)
+                out.append(
+                    "    ppc_unimplemented(c, 0x%08Xu, 0); /* fell off the end of the code */"
+                    % nxt
+                )
             out.append("}")
         if problems:
-            raise ModError("instructions the translator does not support:\n  " + "\n  ".join(problems[:20]))
-        img = bytes(self.image[:self.image_end - self.base])
+            raise ModError(
+                "instructions the translator does not support:\n  "
+                + "\n  ".join(problems[:20])
+            )
+        img = bytes(self.image[: self.image_end - self.base])
         out.append("static const uint8_t k_image[%d] = {" % max(1, len(img)))
         for i in range(0, len(img), 24):
-            out.append("    " + ",".join("%d" % b for b in img[i:i + 24]) + ",")
+            out.append("    " + ",".join("%d" % b for b in img[i : i + 24]) + ",")
         out.append("};")
         out.append("static const WWHDGuestFunc k_funcs[] = {")
         for e in self.entries:
             out.append("    {0x%08Xu, mf_%08X}," % (e, e))
         out.append("};")
-        out.append("static const WWHDGuestHook k_hooks[%d] = {" % max(1, len(self.hooks)))
+        out.append(
+            "static const WWHDGuestHook k_hooks[%d] = {" % max(1, len(self.hooks))
+        )
         for kind, target, func, flags in self.hooks:
-            out.append("    {%d, 0x%08Xu, 0x%08Xu, %d, mf_%08X}," % (kind, target, func, flags, func))
+            out.append(
+                "    {%d, 0x%08Xu, 0x%08Xu, %d, mf_%08X},"
+                % (kind, target, func, flags, func)
+            )
         out.append("};")
-        out.append("static const char* const k_services[] = {%s};" % ", ".join(
-            ['"%s"' % s for s in self.services] + ["0"]))
-        out.append(EPILOGUE % {"version": TRANSLATOR_VERSION, "base": self.base, "size": self.end - self.base,
-                                "image_size": len(img), "nfuncs": len(self.entries), "nhooks": len(self.hooks),
-                                "nsvc": len(self.services),
-                                "svc_assign": "\n".join("    svc_%d = svcs[%d];" % (i, i) for i in range(len(self.services)))})
+        out.append(
+            "static const char* const k_services[] = {%s};"
+            % ", ".join(['"%s"' % s for s in self.services] + ["0"])
+        )
+        out.append(
+            EPILOGUE
+            % {
+                "version": TRANSLATOR_VERSION,
+                "base": self.base,
+                "size": self.end - self.base,
+                "image_size": len(img),
+                "nfuncs": len(self.entries),
+                "nhooks": len(self.hooks),
+                "nsvc": len(self.services),
+                "svc_assign": "\n".join(
+                    "    svc_%d = svcs[%d];" % (i, i) for i in range(len(self.services))
+                ),
+            }
+        )
         return "\n".join(out) + "\n"
 
 
@@ -426,7 +546,9 @@ WWHD_MODULE_EXPORT const WWHDGuestModuleV1* wwhd_guest_module_v1(const WWHDGuest
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     ap.add_argument("elf")
     ap.add_argument("out")
     ap.add_argument("--base", type=lambda s: int(s, 0), default=REGION_START)
@@ -434,7 +556,10 @@ def main():
     ap.add_argument("--report")
     a = ap.parse_args()
     if not (REGION_START <= a.base < REGION_END) or a.base % 0x1000:
-        sys.exit("error: --base must be a 4 KiB aligned address in %08X-%08X" % (REGION_START, REGION_END))
+        sys.exit(
+            "error: --base must be a 4 KiB aligned address in %08X-%08X"
+            % (REGION_START, REGION_END)
+        )
     try:
         t = Translator(Elf(open(a.elf, "rb").read()), a.base)
         src = t.emit(a.id)
@@ -442,10 +567,20 @@ def main():
         sys.exit("error: %s" % e)
     with open(a.out, "w") as f:
         f.write(src)
-    rep = {"translator": TRANSLATOR_VERSION, "base": a.base, "size": t.end - a.base, "functions": len(t.entries),
-           "hooks": [{"kind": {1: "replace", 2: "entry", 3: "return"}[k], "target": "%08X" % tg} for k, tg, _, _ in t.hooks],
-           "services": t.services,
-           "game_calls": sorted({"%08X" % v for k, v in t.imports.values() if k in ("game", "orig")})}
+    rep = {
+        "translator": TRANSLATOR_VERSION,
+        "base": a.base,
+        "size": t.end - a.base,
+        "functions": len(t.entries),
+        "hooks": [
+            {"kind": {1: "replace", 2: "entry", 3: "return"}[k], "target": "%08X" % tg}
+            for k, tg, _, _ in t.hooks
+        ],
+        "services": t.services,
+        "game_calls": sorted(
+            {"%08X" % v for k, v in t.imports.values() if k in ("game", "orig")}
+        ),
+    }
     if a.report:
         with open(a.report, "w") as f:
             json.dump(rep, f, indent=1)

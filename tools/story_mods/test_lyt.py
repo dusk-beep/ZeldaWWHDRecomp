@@ -8,9 +8,9 @@ import sys
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import lyt  # noqa: E402
-from lyt import bflan, bflim, bflyt, binio  # noqa: E402
-from lyt.anim import tracks  # noqa: E402
+import lyt
+from lyt import bflan, bflim, bflyt, binio
+from lyt.anim import tracks
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 EXAMPLE = os.path.join(HERE, "lyt", "examples", "plate.json")
@@ -563,6 +563,7 @@ class CppWriter(unittest.TestCase):
 
     def compare(self, d, art_dir, tag):
         import subprocess
+
         from notebook_model import sarc, yaz0_stored
         path = os.path.join(art_dir, tag + ".json")
         with open(path, "w") as f:
@@ -684,6 +685,7 @@ class ItemIcons(unittest.TestCase):
     def test_cpp_same_bytes(self):
         import subprocess
         import tempfile
+
         from lyt import item_icons as ii
         exe = item_icons_test()
         if not exe:

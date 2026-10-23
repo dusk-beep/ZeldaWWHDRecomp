@@ -2,9 +2,9 @@
 import hashlib
 import json
 import os
-from pathlib import Path
 import shutil
 import time
+from pathlib import Path
 
 
 def atomic_json(path, value):

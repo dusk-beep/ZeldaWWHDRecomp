@@ -6,7 +6,6 @@ function g are paired when w is called by / calls functions already paired with 
 callees, and the pairing is the mutual best with a clear margin. Float/string tokens, size and call
 counts break ties. Repeats until no new pairs appear.
 """
-import math
 from collections import Counter, defaultdict
 
 from features import similarity

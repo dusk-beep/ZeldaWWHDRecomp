@@ -49,9 +49,9 @@ import tempfile
 import zlib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import notebook_model as base  # noqa: E402  (Bfres, sarc, yaz0_stored, BuildError)
-import game_piece_model as gp  # noqa: E402  (room_files, read_model, Writer, write_model, ATTRIBUTE_CLASS)
-from skinned_actor_model import append_dictionary, append_string  # noqa: E402
+import game_piece_model as gp
+import notebook_model as base
+from skinned_actor_model import append_dictionary, append_string
 
 VERSION = 5
 FORMAT = 1

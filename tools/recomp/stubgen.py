@@ -60,12 +60,9 @@ def main(outdir, decomp_hooks=None):
     funcs = sorted(runtime_refs() | hooks)
     with open(os.path.join(outdir, "funcs.h"), "w") as f:
         f.write('#pragma once\n#include "ppc.h"\n\n')
-        for e in funcs:
-            f.write("void f_%08X(Cpu* __restrict c);\n" % e)
-        for e in sorted(hooks):
-            f.write("void f_%08X_orig(Cpu* __restrict c);\nvoid hook_%08X(Cpu* c);\n" % (e, e))
-        for e in sorted(sites):
-            f.write("void site_%08X(Cpu* c);\n" % e)
+        f.writelines("void f_%08X(Cpu* __restrict c);\n" % e for e in funcs)
+        f.writelines("void f_%08X_orig(Cpu* __restrict c);\nvoid hook_%08X(Cpu* c);\n" % (e, e) for e in sorted(hooks))
+        f.writelines("void site_%08X(Cpu* c);\n" % e for e in sorted(sites))
     with open(os.path.join(outdir, "code_000.c"), "w") as f:
         f.write('#include "funcs.h"\n\n/* placeholder: written by tools/recomp/stubgen.py, not game code */\n')
         for e in funcs:

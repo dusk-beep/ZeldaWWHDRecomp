@@ -1,10 +1,10 @@
 """The phone's code-mod build tools file (GuestToolsConfig.java) as the runtime reads it (guest_build.h)."""
 import json
-from pathlib import Path
 import shutil
 import subprocess
 import tempfile
 import unittest
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 

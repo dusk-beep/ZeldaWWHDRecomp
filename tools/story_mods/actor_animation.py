@@ -8,6 +8,7 @@ import bisect
 import math
 import re
 import struct
+
 import actor_model as static
 
 require = static.require
@@ -156,7 +157,7 @@ def inspect_clips(model):
 
 def append_clips(bfres, model):
     """Append only authored native FSKA resources, replacing the template dictionary."""
-    from skinned_actor_model import append_string, append_dictionary
+    from skinned_actor_model import append_dictionary, append_string
     parsed = clips(model)
     f = static.base.Bfres(bfres)
     if not parsed:

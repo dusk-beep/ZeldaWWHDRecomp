@@ -271,7 +271,7 @@ def arg_regs(method, params):
 STMT_SPLIT = re.compile(r"/\* ([0-9A-F]{8}): [0-9A-F]{8} \*/$")
 REG_RE = re.compile(r"c->(r|f)\[(\d+)\](\.ps[01])?(\s*=(?!=))?")
 ARGS = {("r", i) for i in INT_ARGS} | {("f", i) for i in FLT_ARGS}
-VOLATILE = {("r", i) for i in [0] + list(range(3, 13))} | {("f", i) for i in range(0, 14)}
+VOLATILE = {("r", i) for i in [0] + list(range(3, 13))} | {("f", i) for i in range(14)}
 
 
 class Cfg:

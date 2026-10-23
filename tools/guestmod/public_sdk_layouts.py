@@ -27,7 +27,7 @@ def body_of(text, name):
         raise ValueError('missing public layout: ' + name)
     start, depth = match.end(), 1
     # Braces inside comments are irrelevant to layout nesting.
-    masked = re.sub(r'/\*.*?\*/|//[^\n]*', lambda m: ' ' * len(m[0]), text, flags=re.S)
+    masked = re.sub(r'/\*.*?\*/|//[^\n]*', lambda m: ' ' * len(m[0]), text, flags=re.DOTALL)
     for end in range(start, len(text)):
         depth += (masked[end] == '{') - (masked[end] == '}')
         if not depth:

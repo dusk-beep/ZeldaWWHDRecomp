@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: MPL-2.0
 """Independent original synthetic skin structure and deforming-bind fixture."""
 import importlib.util
+import os
 import pathlib
 import struct
-import os
 import tempfile
 import unittest
+
 import skinned_actor_model as skin
 import test_actor_model as static_fixture
 
@@ -34,6 +35,7 @@ def template():
 class SkinTests(unittest.TestCase):
     def test_code_dependencies_change_provenance_without_asset_changes(self):
         from unittest.mock import patch
+
         import actor_animation
         with tempfile.TemporaryDirectory() as directory:
             game=pathlib.Path(directory); archive=game/skin.ARCHIVE; archive.parent.mkdir(parents=True)
@@ -131,7 +133,8 @@ class SkinTests(unittest.TestCase):
         self.assertLess(info['bind_bounds_max'][1],200)
 
     def test_nonidentity_bind_rotations_and_native_matrix_rows(self):
-        import json,math
+        import json
+        import math
         original=asset.make();length=struct.unpack_from('<I',original,12)[0]
         doc=json.loads(original[20:20+length]);binary=bytearray(original[28+length:])
         doc['nodes'][1]['rotation']=[0,math.sin(.15),0,math.cos(.15)]

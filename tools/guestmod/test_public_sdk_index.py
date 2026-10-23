@@ -1,11 +1,12 @@
 """Parser checks use declarations only, with no game input."""
 import unittest
-from public_sdk_index import DECL, VERIFY, mask_declarations, symbols_header
-from public_sdk_layouts import layout, vectors
+
 from public_sdk_bindings import bindings, guest_type
 from public_sdk_data import declarations, play_declarations
+from public_sdk_index import DECL, VERIFY, mask_declarations, symbols_header
+from public_sdk_layouts import layout, vectors
+from public_sdk_object_facts import function_body, unique_number
 from public_sdk_semantics import semantic_declarations
-from public_sdk_object_facts import unique_number, function_body
 
 
 class PublicDeclarations(unittest.TestCase):

@@ -1,11 +1,17 @@
 """Game-free tests of the real lifecycle driver's metadata/receipt checks."""
-import json
 import hashlib
-from pathlib import Path
+import json
 import tempfile
 import unittest
 import zipfile
-from test_package_lifecycle_e2e import local_catalogue, required_setup_receipts, selected_build, read_database
+from pathlib import Path
+
+from test_package_lifecycle_e2e import (
+    local_catalogue,
+    read_database,
+    required_setup_receipts,
+    selected_build,
+)
 
 
 class LifecycleHelpers(unittest.TestCase):

@@ -149,8 +149,9 @@ class ResourceSampler:
 def main():
     """Capture a real debug job without changing the app or its selected inputs."""
     import argparse
-    from pathlib import Path
     import shlex
+    from pathlib import Path
+
     import adb_util
 
     parser = argparse.ArgumentParser(description=__doc__)

@@ -14,7 +14,7 @@ import struct
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import wwsave as W  # noqa: E402
+import wwsave as W
 
 
 def _u8(g, f):
@@ -29,7 +29,7 @@ T = W.HD_FIELDS  # identical offsets for GC (checked in wwsave)
 
 
 def slot_info(g, name):
-    sa = lambda f: W.get(g, T, "status_a." + f)  # noqa: E731
+    sa = lambda f: W.get(g, T, "status_a." + f)
     max_life, life, rupee = struct.unpack(">HHH", sa("max_life") + sa("life") + sa("rupee"))
     items = [W.get(g, T, "item.slot%02d" % i)[0] for i in range(21)]
     equip = list(sa("select_equip"))

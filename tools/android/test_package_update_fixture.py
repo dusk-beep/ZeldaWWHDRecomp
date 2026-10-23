@@ -1,13 +1,13 @@
 """SDK update fixtures change real link inputs without altering the shared pipeline."""
 import json
-from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
 import zipfile
+from pathlib import Path
+from unittest.mock import patch
 
-from package_update_fixture import update, sha
 from package_runtime import NDK_REVISION
+from package_update_fixture import sha, update
 from prepare_python import write_entry
 
 

@@ -8,10 +8,10 @@ import argparse
 import hashlib
 import json
 import platform
-from pathlib import Path
 import shutil
 import subprocess
 import time
+from pathlib import Path
 
 LLVM_REVISION = "87f0227cb60147a26a1eeb4fb06e3b505e9c7261"  # llvmorg-20.1.8
 NDK_REVISION = "30.0.16248370"

@@ -2,10 +2,11 @@
 import json
 import struct
 import tempfile
-from pathlib import Path
-import zipfile
 import unittest
+import zipfile
 import zlib
+from pathlib import Path
+
 import guard
 
 PATH = 'tools/shadercache/template.bin'

@@ -1,13 +1,19 @@
 """Regression for the CI emulator preview intercepting swapped primary touches."""
-import unittest
-from contextlib import redirect_stdout
 import io
 import json
-from pathlib import Path
 import subprocess
 import tempfile
+import unittest
+from contextlib import redirect_stdout
+from pathlib import Path
 
-from display_smoke import primary_preview_clear, capture_timeout_evidence, capture_metric_trend, app_windows_on_display, startup_acquisitions
+from display_smoke import (
+    app_windows_on_display,
+    capture_metric_trend,
+    capture_timeout_evidence,
+    primary_preview_clear,
+    startup_acquisitions,
+)
 
 
 def dispatcher(region, transform='IDENTITY', rows='', flags='NOT_FOCUSABLE', display=0):

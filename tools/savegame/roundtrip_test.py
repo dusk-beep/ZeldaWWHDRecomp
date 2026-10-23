@@ -12,9 +12,9 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import wwsave as W  # noqa: E402
-import gc2hd  # noqa: E402
-import hd2gc  # noqa: E402
+import gc2hd
+import hd2gc
+import wwsave as W
 
 
 def check(path):

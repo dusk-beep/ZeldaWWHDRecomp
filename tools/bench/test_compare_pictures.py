@@ -1,8 +1,9 @@
 import tempfile
 import unittest
 from pathlib import Path
-from PIL import Image
+
 from compare_pictures import compare
+from PIL import Image
 
 
 class PictureComparisonTest(unittest.TestCase):

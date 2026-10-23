@@ -2,9 +2,10 @@
 """Exercise production SAF import with debug-only, authored pipe documents."""
 import argparse
 import json
-from pathlib import Path
-import adb_util
 import time
+from pathlib import Path
+
+import adb_util
 
 
 def main():

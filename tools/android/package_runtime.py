@@ -8,12 +8,12 @@ import argparse
 import hashlib
 import importlib.util
 import json
-from pathlib import Path
 import re
 import shutil
 import subprocess
 import tempfile
 import zipfile
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 spec = importlib.util.spec_from_file_location("desktop_packaging", ROOT / "tools/release/package.py")

@@ -9,8 +9,8 @@ import tempfile
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import appimage  # noqa: E402
-import guard  # noqa: E402
+import appimage
+import guard
 
 
 class RuntimeLicenses(unittest.TestCase):

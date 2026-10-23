@@ -4,15 +4,15 @@ A failed/cancelled generation never replaces a previously usable generation.
 The runtime consumes active.json; native warming is deliberately separate from
 head-start assembly so Android can finish warming inside its renderer lifecycle.
 """
-from contextlib import contextmanager
 import hashlib
 import json
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import tempfile
 import time
+from contextlib import contextmanager
+from pathlib import Path
 
 SCHEMA = 1
 

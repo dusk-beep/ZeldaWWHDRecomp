@@ -50,7 +50,7 @@ def calls_and_branches(words):
 
 
 class Func:
-    __slots__ = ("name", "file", "addr", "size", "tokens", "calls", "branches", "callees")
+    __slots__ = ("addr", "branches", "callees", "calls", "file", "name", "size", "tokens")
 
     def summary(self):
         return "%s %s size=%d calls=%d tokens=%d" % (self.file, self.name, self.size, self.calls, sum(self.tokens.values()))

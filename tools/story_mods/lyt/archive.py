@@ -9,7 +9,7 @@ from . import bflan, bflim, bflyt
 from .description import Description
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from notebook_model import sarc, yaz0_stored  # noqa: E402
+from notebook_model import sarc, yaz0_stored
 
 
 def fill_image(spec):

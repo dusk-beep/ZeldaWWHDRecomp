@@ -14,8 +14,8 @@ import sys
 import zlib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import notebook_model as base  # noqa: E402
-import game_piece_model as gp  # noqa: E402
+import game_piece_model as gp
+import notebook_model as base
 
 require = gp.require
 LIMIT = 256

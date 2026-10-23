@@ -97,8 +97,7 @@ def write_reports(x, g, m, out, tww, outdir):
         gaps.append(run)
     with open(os.path.join(outdir, "regions.tsv"), "w") as o:
         o.write("start\tend\tfunctions\n")
-        for r in gaps:
-            o.write("%08X\t%08X\t%d\n" % (r[0], r[-1], len(r)))
+        o.writelines("%08X\t%08X\t%d\n" % (r[0], r[-1], len(r)) for r in gaps)
     in_gaps = sum(len(r) for r in gaps)
     gc_unique = sum(tot.values())
     print("GameCube functions (weak copies merged) %d, matched %d (%.1f%%)" % (gc_unique, len(matched),

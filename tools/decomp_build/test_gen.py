@@ -10,7 +10,7 @@ import unittest
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "recomp"))
-import builds as game_builds  # noqa: E402
+import builds as game_builds
 
 
 def runtime_hook():
@@ -61,8 +61,7 @@ class GenTest(unittest.TestCase):
     def test_mouse_camera_hooks_stay_in_runtime(self):
         # Recompiled camera bodies must retain the mouse sites in decomp builds too.
         with open(os.path.join(self.src, "wwhd_src/a2.cpp"), "a") as f:
-            for addr in (0x024FA9C8, 0x0250D4E8, 0x0250FDC8):
-                f.write("VERIFY(0x%08X, camera_%08X)\n" % (addr, addr))
+            f.writelines("VERIFY(0x%08X, camera_%08X)\n" % (addr, addr) for addr in (0x024FA9C8, 0x0250D4E8, 0x0250FDC8))
         self.run_gen()
         excluded = self.read("excluded.txt")
         listed = self.read("decomp_hooks.txt")

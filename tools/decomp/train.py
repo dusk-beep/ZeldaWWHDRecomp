@@ -14,7 +14,6 @@ import sys
 from collections import defaultdict
 
 import numpy as np
-
 from binmodel import GC, WW, refine_functions
 from heldout import load_rows, resolve_seeds
 from match2 import Matcher

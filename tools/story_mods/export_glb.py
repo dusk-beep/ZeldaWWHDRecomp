@@ -41,8 +41,8 @@ import zlib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import notebook_model as base  # noqa: E402
-import game_piece_model as gp  # noqa: E402
+import game_piece_model as gp
+import notebook_model as base
 
 BuildError = base.BuildError
 require = gp.require

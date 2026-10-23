@@ -10,9 +10,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 sys.path.insert(0, HERE)
-from ppcdis import dis  # noqa: E402
-from rpx import Rpx  # noqa: E402
-from funcdb import GenIndex, load_names  # noqa: E402
+from funcdb import GenIndex, load_names
+
+from ppcdis import dis
+from rpx import Rpx
 
 gen = GenIndex(os.path.join(ROOT, "build", "gen"))
 names, gc = load_names(os.path.join(ROOT, "build"))

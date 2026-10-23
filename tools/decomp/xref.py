@@ -9,8 +9,9 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "recomp"))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from analyze import Program  # noqa: E402
-from rpx import R_PPC_ADDR16_LO, R_PPC_ADDR32  # noqa: E402
+from analyze import Program
+
+from rpx import R_PPC_ADDR16_LO
 
 
 class Xref:

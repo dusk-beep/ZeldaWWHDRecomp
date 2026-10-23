@@ -1,14 +1,14 @@
 """Game-free adapter checks using the production installer and recompiler."""
-from debug_fixture_build import register as register_fixture_build
 import importlib.util
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch
+from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
+from debug_fixture_build import register as register_fixture_build
 from setup_adapter import Adapter, Paused, atomic_json, digest, inventory
 
 PACKAGE = Path(__file__).resolve().parents[2]

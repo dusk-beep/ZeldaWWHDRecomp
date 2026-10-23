@@ -1,8 +1,12 @@
 import unittest
 
-from resource_sampler import (ResourceSampler, available_bytes, memory_totals,
-                              private_bytes, process_tree)
-
+from resource_sampler import (
+    ResourceSampler,
+    available_bytes,
+    memory_totals,
+    private_bytes,
+    process_tree,
+)
 
 PACKAGE = "org.wwhdrecomp.wwhd"
 PS = """  PID PPID NAME

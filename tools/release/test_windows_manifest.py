@@ -1,9 +1,9 @@
 """Synthetic PE resource fixtures, never game or real executable bytes."""
 import struct
 import tempfile
-from pathlib import Path
 import unittest
 import zipfile
+from pathlib import Path
 
 import guard
 

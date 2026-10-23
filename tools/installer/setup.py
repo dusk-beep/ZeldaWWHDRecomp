@@ -41,9 +41,9 @@ import json
 import os
 import re
 import shutil
+import struct
 import subprocess
 import sys
-import struct
 import tarfile
 import threading
 import time
@@ -57,8 +57,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # Windows embeddable Python runs in isolated mode: it does not add the script
 # directory to sys.path. Resolve shipped sibling modules explicitly.
 sys.path.insert(0, HERE)
-import code_mods  # noqa: E402
-import decomp_setup  # noqa: E402
+import code_mods
+import decomp_setup
+
 PKG = os.path.normpath(os.path.join(HERE, "..", ".."))
 # Portable release (portable.txt in the release folder): everything setup and the game create stays
 # in <release folder>/data. Without the marker: the per-user locations of earlier releases.
@@ -196,7 +197,8 @@ TITLE_IDS = {
 # The builds of the game the port can be made from (tools/recomp/builds.py): the USA build is the
 # canonical one, every other is translated through its own address map (tools/recomp/builds/*.json).
 sys.path.insert(0, os.path.join(PKG, "tools", "recomp"))
-import builds as game_builds  # noqa: E402
+import builds as game_builds
+
 SUPPORTED_BUILDS = {b.title_id: b for b in game_builds.all_builds()}
 SUPPORTED_TITLE = game_builds.canonical_build().title_id
 # The translated code (tools/recomp, the hooks in tools/recomp/hooks*.txt, the runtime) is made for
@@ -1410,7 +1412,7 @@ def language_files_in(folder):
     if not pack:
         return []
     return sorted((n, os.path.join(pack, n)) for n in os.listdir(pack)
-                  if re.match(r"permanent_2d_.*\.pack$", n, re.I) and os.path.isfile(os.path.join(pack, n)))
+                  if re.match(r"permanent_2d_.*\.pack$", n, re.IGNORECASE) and os.path.isfile(os.path.join(pack, n)))
 
 
 def finish_language_source(tmp, region, title_id, source_name, data_dir):

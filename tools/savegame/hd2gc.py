@@ -14,7 +14,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import wwsave as W  # noqa: E402
+import wwsave as W
 
 
 def hd_to_gc_slots(raw, set_gc_name=False, code=b"GZLE01"):

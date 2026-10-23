@@ -6,9 +6,9 @@ The inventory deliberately contains no function bodies or initialized game data.
 """
 import argparse
 import json
-from pathlib import Path
 import re
 import subprocess
+from pathlib import Path
 
 PUBLIC_URL = 'https://github.com/ZeldaWWHDDecomp/wwhd'
 VERIFY = re.compile(r'\bVERIFY\(\s*(0x[0-9A-Fa-f]+)\s*,\s*(&?[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*)\s*\)')
@@ -22,7 +22,7 @@ def git(root, *args):
 
 
 def mask_declarations(text):
-    masked = re.sub(r'/\*.*?\*/|//[^\n]*', lambda m: ''.join('\n' if c == '\n' else ' ' for c in m[0]), text, flags=re.S)
+    masked = re.sub(r'/\*.*?\*/|//[^\n]*', lambda m: ''.join('\n' if c == '\n' else ' ' for c in m[0]), text, flags=re.DOTALL)
     lines, continuation = [], False
     for line in masked.splitlines(keepends=True):
         directive = continuation or line.lstrip().startswith('#')

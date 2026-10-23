@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Dump sections and imported functions of a Wii U RPX."""
-import struct, sys, zlib, collections
+import collections
+import struct
+import sys
+import zlib
+
 d = open(sys.argv[1], "rb").read()
 shoff, = struct.unpack_from(">I", d, 0x20)
 shentsize, shnum, shstrndx = struct.unpack_from(">HHH", d, 0x2E)

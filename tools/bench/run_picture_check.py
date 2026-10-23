@@ -8,10 +8,11 @@ import argparse
 import json
 import os
 import re
-from pathlib import Path
 import shutil
 import subprocess
 import time
+from pathlib import Path
+
 from compare_pictures import compare, file_hash
 from run_bench import SCENES
 

@@ -173,7 +173,7 @@ def identify(rpx_path):
     return by_sha256(file_sha256(rpx_path))
 
 
-_BUILDS_RE = re.compile(r"^#\s*builds:\s*(.+)$", re.I)
+_BUILDS_RE = re.compile(r"^#\s*builds:\s*(.+)$", re.IGNORECASE)
 
 
 def read_hooks(paths, build):

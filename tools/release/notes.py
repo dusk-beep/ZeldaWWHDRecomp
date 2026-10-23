@@ -14,7 +14,7 @@ import sys
 
 
 def section(text, title):
-    m = re.search(r"^## %s\s*$\n(.*?)(?=^## |\Z)" % re.escape(title), text, re.S | re.M)
+    m = re.search(r"^## %s\s*$\n(.*?)(?=^## |\Z)" % re.escape(title), text, re.DOTALL | re.MULTILINE)
     return m.group(1).strip() if m else ""
 
 

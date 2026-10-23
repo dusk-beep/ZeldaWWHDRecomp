@@ -7,11 +7,11 @@ directory. This is a functional test, not a performance measurement or CI unit t
 import argparse
 import json
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 

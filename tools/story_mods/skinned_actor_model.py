@@ -10,6 +10,7 @@ import os
 import re
 import struct
 import tempfile
+
 import actor_model as static
 
 base = static.base
@@ -516,7 +517,8 @@ def converter_sources():
     """Named code fingerprints, independent of the installation directory."""
     import actor_animation
     result = {}
-    import multi_material, game_piece_model
+    import game_piece_model
+    import multi_material
     for name, path in (('skinned_actor_model', __file__), ('actor_model', static.__file__),
                        ('notebook_model', base.__file__), ('shaderprep', base.shaderprep.__file__),
                        ('actor_animation', actor_animation.__file__), ('multi_material', multi_material.__file__),

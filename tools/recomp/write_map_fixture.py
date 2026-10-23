@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: MPL-2.0
 """Emit address-only C tables for runtime unit tests; no executable is needed."""
 import sys
+
 import builds
+
 from recomp import Recompiler
 
 compiler = Recompiler.__new__(Recompiler)

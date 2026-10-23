@@ -12,9 +12,9 @@ import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import stage_builder as sb  # noqa: E402
-import notebook_model as base  # noqa: E402
-import game_piece_model as gp  # noqa: E402
+import game_piece_model as gp
+import notebook_model as base
+import stage_builder as sb
 
 
 def archive(path):

@@ -11,7 +11,6 @@ import math
 import os
 import re
 import struct
-import sys
 import tempfile
 import zlib
 
@@ -471,7 +470,8 @@ def build(game, glb_path, identity, out, collision_out=None):
     if multi:
         # Several materials: the opaque + cut-out template, the writer and the material copier it shares
         # with the building converter.
-        import multi_material, game_piece_model
+        import game_piece_model
+        import multi_material
         for module in (multi_material, game_piece_model):
             with open(module.__file__, 'rb') as source: sources.append(source.read())
         names = (multi_material.BFRES, multi_material.SHADERS)

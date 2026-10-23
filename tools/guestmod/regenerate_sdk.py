@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Regenerate or check SDK declarations from the pinned, clean public decomp."""
 import argparse
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 
 REVISION = "47e1dbc3886cfd8233859dffd73efc41a04a9130"
 ROOT = Path(__file__).resolve().parents[2]

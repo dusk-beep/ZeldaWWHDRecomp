@@ -8,11 +8,11 @@ import argparse
 import hashlib
 import io
 import json
-from pathlib import Path
 import shutil
 import subprocess
 import tempfile
 import zipfile
+from pathlib import Path
 
 from package_runtime import NDK_REVISION, TRIPLES
 from prepare_python import write_entry

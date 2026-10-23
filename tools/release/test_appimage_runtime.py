@@ -13,7 +13,7 @@ import unittest
 from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import appimage  # noqa: E402
+import appimage
 
 GOOD = b"\x7fELF pinned runtime bytes"
 BAD = b"\x7fELF some other runtime"

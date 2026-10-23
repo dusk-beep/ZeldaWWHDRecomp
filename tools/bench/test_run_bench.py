@@ -4,6 +4,7 @@ import tempfile
 import types
 import unittest
 from unittest.mock import patch
+
 import run_bench as bench
 
 
@@ -132,19 +133,25 @@ class BenchmarkTests(unittest.TestCase):
         self.assertEqual(result['status'], 'ok')
         self.assertEqual(result['binary'], bench.os.path.abspath(pathlib.Path(directory) / 'new'))
 """Benchmark statistics and profiler extraction tests; no game input."""
-import unittest
 import contextlib
 import io
 import json
 import os
-from pathlib import Path
 import subprocess
 import sys
-import tempfile
+import unittest
+from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
-from run_bench import benchmark_pids, logic_cpu_samples, quiet_reasons, run_statistics, worker_pids
+
 import run_bench
+from run_bench import (
+    benchmark_pids,
+    logic_cpu_samples,
+    quiet_reasons,
+    run_statistics,
+    worker_pids,
+)
 
 
 class BenchmarkStatistics(unittest.TestCase):

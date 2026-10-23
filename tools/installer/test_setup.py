@@ -9,7 +9,7 @@ import unittest
 from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import setup  # noqa: E402
+import setup
 
 KEY_HEX = "0011223344556677" "8899aabbccddeeff"  # made-up test value
 
@@ -451,8 +451,9 @@ class AppImagePortableHome(unittest.TestCase):
 
     @unittest.skipIf(sys.platform.startswith("win"), "~ is %USERPROFILE% there, not $HOME")
     def test_every_folder_follows_home(self):
-        import shader_prebuild
         from pathlib import Path
+
+        import shader_prebuild
         with tempfile.TemporaryDirectory() as t:
             image = os.path.join(t, "Wind Waker [HD].AppImage")
             home = image + ".home"
@@ -968,7 +969,7 @@ class CodeModsBuild(unittest.TestCase):
         from types import SimpleNamespace
         with tempfile.TemporaryDirectory() as d, mock.patch.dict(os.environ, {}, clear=True):
             ctx = SimpleNamespace(data_dir=d, args=SimpleNamespace(code_mods=None),
-                                  state=lambda: {})
+                                  state=dict)
             ui = mock.Mock(interactive=True)
             ui.yesno.side_effect = lambda question, default: default
             self.assertFalse(setup.setup_code_mods(ctx, ui))
@@ -989,8 +990,8 @@ class CodeModsBuild(unittest.TestCase):
             self.assertTrue(setup.setup_code_mods(ctx, setup.UI(False)))
 
     def test_setup_writes_both_host_settings_preserving_other_options(self):
-        from pathlib import Path
         import plistlib
+        from pathlib import Path
         with tempfile.TemporaryDirectory() as d:
             for mac in (False, True):
                 filename = "display.plist" if mac else "settings.ini"
@@ -1007,8 +1008,8 @@ class CodeModsBuild(unittest.TestCase):
                         self.assertEqual(values["code-mods"], "1" if hooks else "0")
 
     def test_setup_host_setting_locations_and_overrides(self):
-        from pathlib import Path
         import plistlib
+        from pathlib import Path
         with tempfile.TemporaryDirectory() as d, mock.patch.dict(os.environ, {
                 "HOME": d, "USERPROFILE": d, "APPDATA": d, "XDG_CONFIG_HOME": d}, clear=True):
             for mac, win, suffix in ((True, False, "Library/Application Support/wwhd/display.plist"),
@@ -1026,9 +1027,9 @@ class CodeModsBuild(unittest.TestCase):
                     self.assertEqual(values["code-mods"], "0")
 
     def test_setup_install_publishes_choice_settings_and_variant(self):
+        import plistlib
         from pathlib import Path
         from types import SimpleNamespace
-        import plistlib
         package_test = os.environ.get("WWHD_SETUP_MOD_PACKAGE_TEST")
         # the test program needs the host's PATH (Windows: its DLLs) although setup runs in a clean environment
         host_env = {k: v for k, v in os.environ.items() if k.upper() in ("PATH", "SYSTEMROOT", "WINDIR")}
@@ -1045,7 +1046,7 @@ class CodeModsBuild(unittest.TestCase):
             ctx = SimpleNamespace(data_dir=str(data), game_dir=str(game), args=args,
                                   manifest={"platform": "fixture", "toolchain": {}, "exe": "fixture"},
                                   exe=str(data / "bin/fixture"), exe_dir=str(data / "bin"),
-                                  version="test", state=lambda: {})
+                                  version="test", state=dict)
             def translate(game, gen, hooks=False):
                 Path(gen).mkdir()
                 Path(gen, "mode.txt").write_text("on" if hooks else "off")

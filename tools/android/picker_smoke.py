@@ -2,15 +2,16 @@
 """Select authored inputs through real DocumentsUI and check durable read grants."""
 import argparse
 import json
-from pathlib import Path
 import re
 import shlex
-import adb_util
 import tempfile
 import time
 import uuid
-from urllib.parse import unquote
 import xml.etree.ElementTree as ET
+from pathlib import Path
+from urllib.parse import unquote
+
+import adb_util
 
 
 def wait_for_feedback(fragment, read_nodes, expand_details, scroll_forward, rewind,

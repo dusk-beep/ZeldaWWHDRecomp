@@ -19,7 +19,7 @@ import sys
 import zlib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import wwsave as W  # noqa: E402
+import wwsave as W
 
 MAX_SIZE = 64 * 1024
 BLOBS = {"savedata": W.HD_SLOT, "hd_player": 16, "hd_status": 4, "hd_event": 20, "hd_map": 220}

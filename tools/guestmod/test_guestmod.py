@@ -18,8 +18,9 @@ from unittest import mock
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
-import guestmod  # noqa: E402
-import build_guest_mod as builder  # noqa: E402
+import build_guest_mod as builder
+
+import guestmod
 
 CLANG = os.environ.get("WWHD_PPC_CLANG") or shutil.which("clang")
 LLD = os.environ.get("WWHD_PPC_LLD") or shutil.which("ld.lld")

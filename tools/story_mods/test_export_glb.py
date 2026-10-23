@@ -16,10 +16,10 @@ import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import export_glb as ex  # noqa: E402
-import game_piece_model as gp  # noqa: E402
-import notebook_model as base  # noqa: E402
-from test_game_piece_model import dzb, dzb_groups, recipes  # noqa: E402
+import export_glb as ex
+import game_piece_model as gp
+import notebook_model as base
+from test_game_piece_model import dzb, dzb_groups, recipes
 
 
 def read_glb(body):

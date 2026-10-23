@@ -39,9 +39,9 @@ import sys
 import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import notebook_model as base  # noqa: E402
-import collision_mesh  # noqa: E402
-from skinned_actor_model import append_dictionary, append_string  # noqa: E402
+import collision_mesh
+import notebook_model as base
+from skinned_actor_model import append_dictionary, append_string
 
 VERSION = 3
 FORMAT = 1

@@ -1,18 +1,18 @@
 """Real shared translation/host compilation through the durable job runner."""
-from debug_fixture_build import register as register_fixture_build
 import ctypes
 import fcntl
 import importlib.util
 import json
-from pathlib import Path
 import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
-from ondevice_setup import run, process_resources
-from setup_adapter import Adapter, digest
+from debug_fixture_build import register as register_fixture_build
+from ondevice_setup import process_resources, run
+from setup_adapter import Adapter
 
 ROOT = Path(__file__).resolve().parents[2]
 spec = importlib.util.spec_from_file_location("job_fixture", ROOT / "tools/recomp/android_fixture.py")

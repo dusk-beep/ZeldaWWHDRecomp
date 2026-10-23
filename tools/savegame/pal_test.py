@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Synthetic PAL conversion regressions; no game files or real saves."""
-from pathlib import Path
 import struct
 import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
 import gc2hd
 import hd2gc

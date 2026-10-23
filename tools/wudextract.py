@@ -92,7 +92,7 @@ class Wud:
 
 
 class Entry:
-    __slots__ = ("name", "path", "is_dir", "offset", "size", "cluster", "flags")
+    __slots__ = ("cluster", "flags", "is_dir", "name", "offset", "path", "size")
 
 
 class FST:
@@ -148,7 +148,7 @@ class FST:
                 h0 = hashes[(blk % 16) * 20:(blk % 16) * 20 + 16]
                 fdata = aes_dec(self.key, h0, raw[BLOCK_HASH_SIZE:])
                 if hashlib.sha1(fdata).digest() != hashes[(blk % 16) * 20:(blk % 16) * 20 + 20]:
-                    raise IOError("H0 hash mismatch in %s block %d" % (e.path, blk))
+                    raise OSError("H0 hash mismatch in %s block %d" % (e.path, blk))
                 n = min(remaining, BLOCK_FILE_SIZE - within)
                 out.write(fdata[within:within + n])
                 remaining -= n

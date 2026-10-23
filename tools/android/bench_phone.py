@@ -30,7 +30,7 @@ import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), "bench"))
-import run_bench  # noqa: E402  (parse_prof, summarize, logic_cpu_samples, SCENES)
+import run_bench
 
 PLAYER_PACKAGE = "org.wwhdrecomp.wwhd"
 ACTIVITY = "org.wwhdrecomp.wwhd.WwhdActivity"
@@ -75,7 +75,7 @@ def meminfo(serial, package):
     pss = re.search(r"TOTAL PSS:\s+(\d+)", text)
     rss = re.search(r"TOTAL RSS:\s+(\d+)", text)
     if not pss:  # older layout: "TOTAL  <pss> ..."
-        pss = re.search(r"^\s*TOTAL\s+(\d+)", text, re.M)
+        pss = re.search(r"^\s*TOTAL\s+(\d+)", text, re.MULTILINE)
     return {"pss_kib": int(pss.group(1)) if pss else None, "rss_kib": int(rss.group(1)) if rss else None}
 
 

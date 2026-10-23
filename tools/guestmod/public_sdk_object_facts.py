@@ -51,7 +51,7 @@ def function_body(text, name):
     match = re.search(r'\b' + re.escape(name) + r'\([^)]*\)\s*\{', text)
     if not match:
         raise ValueError('public function declaration changed: ' + name)
-    masked = re.sub(r'/\*.*?\*/|//[^\n]*', lambda m: ' ' * len(m[0]), text, flags=re.S)
+    masked = re.sub(r'/\*.*?\*/|//[^\n]*', lambda m: ' ' * len(m[0]), text, flags=re.DOTALL)
     start, depth = match.end(), 1
     for end in range(start, len(text)):
         depth += (masked[end] == '{') - (masked[end] == '}')

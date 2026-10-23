@@ -8,13 +8,14 @@ import argparse
 import hashlib
 import io
 import json
-from pathlib import Path
 import re
 import shlex
-import adb_util
 import time
 import uuid
 import zipfile
+from pathlib import Path
+
+import adb_util
 
 PACKAGE = "org.wwhdrecomp.wwhd"
 

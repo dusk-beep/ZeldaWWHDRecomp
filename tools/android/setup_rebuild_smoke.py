@@ -8,13 +8,14 @@ and activation run through production code. Restores metadata and the first APK.
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import re
 import shlex
-import adb_util
 import time
 import uuid
 import zipfile
+from pathlib import Path
+
+import adb_util
 
 PACKAGE = "org.wwhdrecomp.wwhd"
 

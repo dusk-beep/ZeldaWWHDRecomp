@@ -11,8 +11,8 @@ import argparse
 import itertools
 import json
 import math
-from pathlib import Path
 import statistics
+from pathlib import Path
 
 
 def read(path):
