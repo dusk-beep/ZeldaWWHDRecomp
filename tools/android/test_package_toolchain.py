@@ -33,7 +33,7 @@ class PackageTests(unittest.TestCase):
         for name in NAMES: (self.source / "bin" / name).write_bytes(elf())
         (self.source / "licenses/test.txt").write_text("authored packaging fixture")
         self.metadata = {"llvm_revision": LLVM_REVISION, "ndk_revision": NDK_REVISION,
-                         "abi": "arm64-v8a", "api": 33}
+                         "abi": "arm64-v8a", "api": 31}
         self.seal()
 
     def seal(self):
