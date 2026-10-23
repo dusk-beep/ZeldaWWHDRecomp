@@ -186,6 +186,12 @@ def build(pkg, out, base, cc, include, game_build=None):
         f.write(t.emit(man["id"]))
     t1 = time.time()
     cmd = cc + CFLAGS + ["-I", include, src, "-o", mod + ".tmp"]
+
+env = os.environ.copy()
+
+    env["TMPDIR"] = os.path.join(out, "tmp")
+    os.makedirs(env["TMPDIR"], exist_ok=True)
+    p = subprocess.run(cmd, capture_output=True, text=True, env=env)
     p = subprocess.run(cmd, capture_output=True, text=True)
     with open(os.path.join(d, "build.log"), "w") as f:
         f.write("$ %s\n%s%s" % (" ".join(cmd), p.stdout, p.stderr))

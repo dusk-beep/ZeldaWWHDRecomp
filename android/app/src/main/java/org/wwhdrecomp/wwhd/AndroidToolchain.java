@@ -83,7 +83,7 @@ public final class AndroidToolchain {
         // conventional bin/clang and bin/ld.lld. lld's installed name contains
         // an exact '-ld.lld-' component so its multicall driver selects ELF.
         JSONArray cc = new JSONArray().put(executables[0].getAbsolutePath())
-            .put("--driver-mode=gcc").put("--target=" + triple + "33")
+            .put("--driver-mode=gcc").put("--target=" + triple + "31")
             .put("--sysroot=" + new File(data, "sysroot").getAbsolutePath())
             .put("-resource-dir=" + new File(data, "lib/clang/20").getAbsolutePath());
         JSONArray cxx = new JSONArray(cc.toString()).put("--driver-mode=g++")
