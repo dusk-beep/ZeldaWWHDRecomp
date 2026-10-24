@@ -1,0 +1,108 @@
+
+name: Android Debug APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  debug:
+    name: Build Android Debug APK (ARM64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+
+    env:
+      ABI: arm64-v8a
+      NDK_VERSION: 30.0.16248370
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Fetch pinned optional shader template
+        run: python3 tools/release/fetch_shader_template.py
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Install Android SDK and NDK packages
+        timeout-minutes: 15
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install \
+            "ndk;$NDK_VERSION" \
+            "platforms;android-36" \
+            "build-tools;35.0.0"
+
+      - name: Prepare Android compiler
+        uses: ./.github/actions/android-compiler
+        with:
+          abi: arm64-v8a
+
+      - name: Package compiler for APK
+        run: |
+          python3 tools/android/package_toolchain.py \
+            --compiler build/compiler/package \
+            --out build/compiler/apk-package
+
+      - name: Build runtime and extractor
+        run: |
+          python3 tools/recomp/stubgen.py build/gen-stub
+          GEN_DIR="$PWD/build/gen-stub" ANDROID_SDK="$ANDROID_HOME" JOBS=4 android/build_native.sh
+          cmake --build android/build/game --target wwhd-extract --parallel 4
+          NDK="$ANDROID_HOME/ndk/$NDK_VERSION"
+          python3 tools/android/package_extractor.py \
+            --build android/build/game --ndk "$NDK" --abi "$ABI" --out build/extractor-apk
+          python3 tools/android/package_runtime.py \
+            --build android/build/game --ndk "$NDK" --abi "$ABI" --out build/runtime-sdk
+          rm "android/app/libs/$ABI/libmain.so"
+
+      - name: Cache embedded Python
+        uses: actions/cache@v5
+        with:
+          path: build/embedded-python/python.tar.gz
+          key: android-cpython-${{ env.ABI }}-${{ hashFiles('tools/android/prepare_python.py') }}
+
+      - name: Prepare embedded Python
+        run: |
+          python3 tools/android/prepare_python.py \
+            --abi "$ABI" \
+            --ndk "$ANDROID_HOME/ndk/$NDK_VERSION" \
+            --out build/embedded-python \
+            --runtime-sdk build/runtime-sdk
+
+      - name: Build debug APK
+        run: |
+          android/gradlew -p android --no-daemon \
+            -PwwhdAbi="$ABI" \
+            -PwwhdVersionName="debug" \
+            -PwwhdVersionCode="${GITHUB_RUN_NUMBER}" \
+            -PwwhdPythonDir="$PWD/build/embedded-python/package" \
+            -PwwhdToolchainDir="$PWD/build/compiler/apk-package" \
+            -PwwhdExtractorDir="$PWD/build/extractor-apk" \
+            assembleDebug --stacktrace
+
+      - name: Verify APK exists
+        run: |
+          APK="android/app/build/outputs/apk/debug/app-debug.apk"
+          test -f "$APK"
+          ls -lh "$APK"
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v5
+        with:
+          name: wwhd-debug-arm64
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
