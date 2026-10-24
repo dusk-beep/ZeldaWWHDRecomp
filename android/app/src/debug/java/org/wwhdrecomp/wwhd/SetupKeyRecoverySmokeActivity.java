@@ -23,7 +23,7 @@ public final class SetupKeyRecoverySmokeActivity extends Activity {
     private void readKey(File job, JSONObject config, String key, int expected) throws Exception {
         try (ParcelFileDescriptor descriptor = SetupKeyAccess.open(this, job, config, key);
              ParcelFileDescriptor.AutoCloseInputStream stream = new ParcelFileDescriptor.AutoCloseInputStream(descriptor)) {
-            byte[] bytes = compat.readAllBytes();
+            byte[] bytes = Compat.readAllBytes();
             require(bytes.length == 16 && bytes[0] == expected, "Wrong authored key input");
         }
     }
